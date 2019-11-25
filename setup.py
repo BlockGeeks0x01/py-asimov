@@ -1,0 +1,67 @@
+from setuptools import (
+    setup,
+    find_packages,
+)
+
+with open("README.md", "r") as f:
+    long_description = f.read()
+
+
+extras_require = {
+    'test': [
+        "pytest>=5.2.2,<6",
+    ],
+    'lint': [],
+    'doc': [
+        "Sphinx>=2.2.1,<3",
+    ],
+    'dev': [
+        "pytest-watch>=4.2.0,<5",
+        "ipython",
+        "wheel",
+        "twine",
+        "bumpversion>=0.5.3,<1"
+    ]
+}
+
+extras_require['dev'] = (
+    extras_require['dev'] +
+    extras_require['test'] +
+    extras_require['doc']
+)
+
+setup(
+    name="py-asimov",
+    version='0.0.3',
+    keywords="asimov",
+    description="""sdk for asimov chain""",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    license="MIT License",
+    author="The Asimov Foundation",
+    author_email="ericsgy@163.com",
+    include_package_data=True,
+    url="https://gitlab.asimov.work/asimov/asimov-python-sdk",
+    install_requires=[
+        "fastecdsa>=1.7.4,<2",
+        "eth-utils>=1.8.0,<2",
+        "web3>=4.9.0,<5",
+        "python-bitcointx>=1.0.1,<2",
+        "requests>=2.22.0,<3",
+        "py-solc>=3.2.0,<4",
+    ],
+    python_requires=">=3.7, <4",
+    extras_require=extras_require,
+    zip_safe=False,
+    py_modules=['asimov'],
+    packages=find_packages(exclude=["test", "test.*"]),
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+    ],
+)
