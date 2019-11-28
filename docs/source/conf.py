@@ -37,9 +37,6 @@ __version__ = setup_version
 version = '.'.join(__version__.split('.')[:2])
 release = __version__
 
-# The full version, including alpha/beta/rc tags
-release = '0.0.3'
-
 
 # -- General configuration ---------------------------------------------------
 
