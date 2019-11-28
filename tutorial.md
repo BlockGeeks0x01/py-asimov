@@ -41,7 +41,7 @@ $ brew install gmp
 ### Install Asimov Python SDK
 
 ```sh
-pip install py-asimov
+pip install -i https://test.pypi.org/simple/ py-asimov
 ```
 
 We provide high level Python API through JS SDK. Please visit [Python API](./python-api.md) to read api specifications.
