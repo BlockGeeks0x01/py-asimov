@@ -1,14 +1,13 @@
-.. py-asimov documentation master file, created by
-   sphinx-quickstart on Mon Nov 25 15:13:08 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+py-asimov
+==============================
 
-Welcome to py-asimov's documentation!
-=====================================
+Sign and send Asimov transaction with local private keys
+
+Contents
+--------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
 
    asimov
    releases
