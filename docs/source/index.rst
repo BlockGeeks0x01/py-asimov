@@ -10,6 +10,9 @@ Welcome to py-asimov's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   asimov
+   releases
+
 
 
 Indices and tables
@@ -17,4 +20,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

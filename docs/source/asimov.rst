@@ -44,14 +44,6 @@ asimov.data\_type module
    :undoc-members:
    :show-inheritance:
 
-asimov.error module
--------------------
-
-.. automodule:: asimov.error
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 asimov.node module
 ------------------
 
