@@ -1,13 +1,23 @@
 __all__ = [
-    "KeyFactory", "Address", "Transaction", "Contract", "Node", "AsimovSolc", "EvmLogParser",
-    "Template", "constant", "Asset"
+    "AccountFactory",
+    "Address",
+    "Transaction",
+    "Contract",
+    "Node",
+    "AsimovSolc",
+    "EvmLogParser",
+    "Template",
+    "constant",
+    "Asset",
+    "PrivateKeyFactory",
 ]
 
-from .monkey_patch import *
+from ._monkey_patch import *
 
-from asimov.address import (
-    KeyFactory,
+from asimov.account import (
+    AccountFactory,
     Address,
+    PrivateKeyFactory,
 )
 from asimov.transactions import Transaction
 from asimov.contract import Contract

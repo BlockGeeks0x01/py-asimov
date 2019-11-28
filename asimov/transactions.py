@@ -9,8 +9,8 @@ from bitcointx.core import script, b2lx, Hash
 from bitcointx.core.serialize import VarIntSerializer
 
 from .constant import TxType
-from .data_type import Key
-from .address import Address
+from .data_type import Account
+from .account import Address
 
 
 DEFAULT_SEQUENCE = 0xffffffff
@@ -33,7 +33,7 @@ class TxInput:
         self.sequence = DEFAULT_SEQUENCE
         self.scriptPubKey = vin['scriptPubKey']
         self.sig_script = None
-        self.signed_key: Key = vin.get('signed_key')     # 解锁这个输入脚本的key
+        self.signed_key: Account = vin.get('signed_key')     # 解锁这个输入脚本的key
 
     def write_buffer(self, buf):
         buf.write(self.prev_tx_id)
@@ -153,55 +153,53 @@ class Transaction:
 
     @staticmethod
     def parse_sign_hex(sign_hex):
-        """解析签名交易-16进制哈希"""
-        # todo 假设vin,vou数量有限，都能用一个字节表示
+        """parse signed tx"""
         parse = list()
-        parse.append(f"协议版本: {sign_hex[:8]}")
-        parse.append(f"vin数量: {sign_hex[8:10]}")
+        parse.append(f"protocol version: {sign_hex[:8]}")
+        parse.append(f"vin amount: {sign_hex[8:10]}")
         vin_num = Web3.toInt(hexstr=sign_hex[8:10])
         cursor = 10
         for n in range(vin_num):
-            parse.append(f"第{n}组 vin")
+            parse.append(f"the {n}st vin")
             parse.append(f"vin hash: {sign_hex[cursor: cursor+64]}")
             parse.append(f"vin index: {sign_hex[cursor+64:cursor+64+8]}")
             cursor += 72
-            parse.append(f"完整解锁脚本长度: {sign_hex[cursor: cursor+2]}")
+            parse.append(f"total length of unlock script: {sign_hex[cursor: cursor+2]}")
             cursor += 2
-            parse.append(f"解锁脚本长度: {sign_hex[cursor: cursor+2]}")
+            parse.append(f"length of unlock script: {sign_hex[cursor: cursor+2]}")
             redeem_script_length = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
             cursor += 2
-            parse.append(f"解锁脚本: {sign_hex[cursor: cursor+(redeem_script_length-1)*2]}")
+            parse.append(f"unlock script: {sign_hex[cursor: cursor+(redeem_script_length-1)*2]}")
             cursor += (redeem_script_length-1)*2
-            parse.append(f"签名类型: {sign_hex[cursor: cursor+2]}")
+            parse.append(f"sign type: {sign_hex[cursor: cursor+2]}")
             cursor += 2
-            parse.append(f"公钥长度: {sign_hex[cursor: cursor+2]}")
+            parse.append(f"length of public key: {sign_hex[cursor: cursor+2]}")
             public_key_length = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
             cursor += 2
-            parse.append(f"解锁脚本的私钥对应的公钥: {sign_hex[cursor: cursor+public_key_length*2]}")
+            parse.append(f"public key of unlock script: {sign_hex[cursor: cursor+public_key_length*2]}")
             cursor += public_key_length * 2
             parse.append(f"sequence: {sign_hex[cursor: cursor+8]}")
             cursor += 8
-        parse.append(f"vout数量: {sign_hex[cursor: cursor+2]}")
+        parse.append(f"vout amount: {sign_hex[cursor: cursor+2]}")
         vout_num = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
         cursor += 2
         for n in range(vout_num):
-            parse.append(f"第{n}组 vout")
+            parse.append(f"the {n} st vout")
             parse.append(f"amount: {sign_hex[cursor: cursor + 16]}")
             cursor += 16
-            # todo 假设 pkscript长度 1个字节就能表示
-            parse.append(f"pkscript长度: {sign_hex[cursor: cursor + 2]}")
+            parse.append(f"length of pkscript: {sign_hex[cursor: cursor + 2]}")
             pkscript_length = Web3.toInt(hexstr=sign_hex[cursor: cursor + 2])
             cursor += 2
             parse.append(f"pkscript: {sign_hex[cursor: cursor + pkscript_length * 2]}")
             cursor += pkscript_length * 2
-            parse.append(f"assets 长度: {sign_hex[cursor: cursor+ 2]}")
+            parse.append(f"length of assets: {sign_hex[cursor: cursor+ 2]}")
             assets_length = Web3.toInt(hexstr=sign_hex[cursor: cursor + 2])
             cursor += 2
             parse.append(f"pkscript: {sign_hex[cursor: cursor + assets_length * 2]}")
             cursor += assets_length * 2
             data_length = VarIntSerializer.deserialize(Web3.toBytes(hexstr=sign_hex[cursor:]))
             data_length_self_length = len(VarIntSerializer.serialize(data_length))
-            parse.append(f"data 长度: {sign_hex[cursor: cursor+data_length_self_length * 2]}({data_length})")
+            parse.append(f"length of data: {sign_hex[cursor: cursor+data_length_self_length * 2]}({data_length})")
             cursor += data_length_self_length * 2
             parse.append(f"data: {sign_hex[cursor: cursor + data_length * 2]}")
             cursor += data_length * 2
@@ -224,11 +222,11 @@ class AsimovScript:
         return bytes(Hash(s))
 
     @classmethod
-    def _sign(cls, key: Key, hashbuf, hash_type) -> bytes:
-        sec_key = CBitcoinSecret.from_bytes(bytes.fromhex(remove_0x_prefix(key.private_key)))
+    def _sign(cls, account: Account, hashbuf, hash_type) -> bytes:
+        sec_key = CBitcoinSecret.from_bytes(bytes.fromhex(remove_0x_prefix(account.private_key)))
         sig_script_bytes: bytes = sec_key.sign(hashbuf)
         sig_script_bytes += bytes([hash_type & 0xff])
-        public_key = Web3.toBytes(hexstr=key.public_key.decode())
+        public_key = Web3.toBytes(hexstr=account.public_key.decode())
 
         script_buffer = BytesIO()
         script_buffer.write(bytes([len(sig_script_bytes)]))
@@ -238,7 +236,7 @@ class AsimovScript:
         return script_buffer.getvalue()
 
     @classmethod
-    def sign(cls, tx: Transaction, key_pair: Key, in_idx, sub_script, hash_type=script.SIGHASH_ALL) -> bytes:
+    def sign(cls, tx: Transaction, key_pair: Account, in_idx, sub_script, hash_type=script.SIGHASH_ALL) -> bytes:
         hashbuf = cls.SignatureHash(tx, in_idx, sub_script, hash_type)
         sign_hash = cls._sign(key_pair, hashbuf, hash_type)
         return sign_hash

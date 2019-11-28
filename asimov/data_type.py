@@ -9,7 +9,7 @@ ContractTemplate = namedtuple("ContractTemplate", ("template_name", "category", 
 ContractTemplate.__new__.__defaults__ = (None,) * 5
 
 
-class Key:
+class Account:
     def __init__(self, private_key=None, address=None, public_key=None):
         self.private_key = private_key
         self.public_key = public_key

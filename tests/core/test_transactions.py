@@ -2,7 +2,7 @@ from web3 import Web3
 from bitcointx.core import b2lx
 from asimov import (
     Transaction,
-    KeyFactory
+    AccountFactory
 )
 
 
@@ -33,7 +33,7 @@ def test_sign_trx():
         "scriptPubKey": "76a915662250f9452ac336daaeee722615619d2ba1422793c5ac",
         "txid": "5048c6f29585c25c02c9dcf4174234fe798ed0ffefead3a76b1cc76aaf9f5693",
         "vout": 0,
-        "signed_key": KeyFactory.new(private_key)
+        "signed_key": AccountFactory.new(private_key)
     }]
     outputs = [{
         "amount": 200000000,
@@ -51,7 +51,7 @@ def test_pay_to_contract_trx():
         "scriptPubKey": "76a915662250f9452ac336daaeee722615619d2ba1422793c5ac",
         "txid": "5048c6f29585c25c02c9dcf4174234fe798ed0ffefead3a76b1cc76aaf9f5693",
         "vout": 0,
-        "signed_key": KeyFactory.new(private_key)
+        "signed_key": AccountFactory.new(private_key)
     }]
     outputs = [{
         "amount": 200000000,
@@ -69,7 +69,7 @@ def test_call_contract_trx():
         "txid": "df972a09734147ffafec91401bb9bea692d0922401277e476367a07df4b99668",
         "vout": 0,
         "scriptPubKey": "76a915662250f9452ac336daaeee722615619d2ba1422793c5ac",
-        "signed_key": KeyFactory.new(private_key)
+        "signed_key": AccountFactory.new(private_key)
     }]
     outputs = [{
         "amount": 0,
@@ -90,7 +90,7 @@ def test_call_genesis_contract_trx():
         "txid": "df972a09734147ffafec91401bb9bea692d0922401277e476367a07df4b99668",
         "vout": 0,
         "scriptPubKey": "76a915662250f9452ac336daaeee722615619d2ba1422793c5ac",
-        "signed_key": KeyFactory.new(private_key)
+        "signed_key": AccountFactory.new(private_key)
     }]
     outputs = [{
         "amount": 0,
@@ -111,7 +111,7 @@ def test_create_template_trx():
         "txid": "df972a09734147ffafec91401bb9bea692d0922401277e476367a07df4b99668",
         "vout": 0,
         "scriptPubKey": "76a915662250f9452ac336daaeee722615619d2ba1422793c5ac",
-        "signed_key": KeyFactory.new(private_key)
+        "signed_key": AccountFactory.new(private_key)
     }]
     outputs = [{
         "amount": 0,

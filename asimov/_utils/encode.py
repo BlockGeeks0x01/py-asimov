@@ -5,7 +5,7 @@ from web3.utils.contracts import encode_transaction_data as __encode_transaction
 from web3.utils.abi import filter_by_name, filter_by_type
 from eth_abi import encode_abi
 
-from asimov.data_type import Key
+from asimov.data_type import Account
 
 
 encode_transaction_data = functools.partial(__encode_transaction_data, None)
@@ -13,7 +13,7 @@ encode_transaction_data = functools.partial(__encode_transaction_data, None)
 
 class AsimovJsonEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, Key):
+        if isinstance(obj, Account):
             return {"private_key": obj.private_key, "public_key": obj.public_key, "address": obj.address}
         elif isinstance(obj, bytes):
             return obj.decode('utf-8')

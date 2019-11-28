@@ -13,16 +13,29 @@ from eth_utils import (
 from web3 import Web3
 from bitcointx.core import script
 
-from .data_type import Key
+from .data_type import Account
 from .constant import AddressType, AsimovOpCode
 
 
 class PrivateKeyFactory:
+    """Private key generator"""
     KEY_BYTES = 32
     CURVE_ORDER = int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16)
 
     @classmethod
     def generate_key(cls) -> str:
+        """
+        Create a new private key and return it.
+        :return: a string represents private key
+
+        .. code-block:: python
+
+            >>> from asimov import PrivateKeyFactory
+            >>> PrivateKeyFactory.generate_key()
+            'bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056'
+
+            # note that the key generated above is and random value, it may be different on your system
+        """
         big_int = secrets.randbits(cls.KEY_BYTES * 8)
         big_int %= cls.CURVE_ORDER - 1
         big_int += 1
@@ -30,22 +43,51 @@ class PrivateKeyFactory:
         return key
 
 
-class KeyFactory:
+class AccountFactory:
+    """
+    The primary entry point for working with Asimov private keys.
+
+    It does **not** require a connection to an Asimov node.
+    """
+
     @classmethod
     def generate_address(cls, private_key: str) -> str:
         """
-        :param private_key:
-        :return: 没有0x前缀
+        create a asimov address with the given private key
+        :param private_key: the private key
+        :return: an hex address converted from private key, without 0x prefix.
+
+        .. code-block:: python
+
+            >>> from asimov import AccountFactory
+            >>> AccountFactory.generate_address("bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            '66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a'
         """
         public_key = cls.private2compressed_public(remove_0x_prefix(private_key))
         address = cls.__public2address(public_key)
         return address
 
     @classmethod
-    def private2key_pair(cls, private_key: str) -> Key:
+    def private2account(cls, private_key: str) -> Account:
+        """
+        convert private key to account and returns it as a :class:`~asimov.data_type.Account`
+        :param private_key: the private key
+        :return: an object with private key, address and convenience methods.
+
+        .. code-block:: python
+
+            >>> from asimov import AccountFactory
+            >>> account = AccountFactory.private2account("bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> account.address
+            '0x66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a'
+            >>> account.private_key
+            '0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056'
+            >>> account.public_key
+            b'023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601'
+        """
         public_key = cls.private2compressed_public(remove_0x_prefix(private_key))
         address = cls.__public2address(public_key)
-        return Key(add_0x_prefix(private_key), add_0x_prefix(address), public_key)
+        return Account(add_0x_prefix(private_key), add_0x_prefix(address), public_key)
 
     @classmethod
     def __private2public(cls, private_key: str) -> bytes:
@@ -59,12 +101,22 @@ class KeyFactory:
         return bitcoin_byte + v
 
     @classmethod
-    def private2btc_public(cls, private_key: str) -> bytes:
+    def private2public(cls, private_key: str) -> bytes:
+        """
+        convert private key to public key
+        :param private_key: private key
+        :return: public key
+        """
         key_hex = cls.__private2public(private_key)
         return cls.__add_bitcoin_byte(key_hex)
 
     @classmethod
     def private2compressed_public(cls, private_key: str) -> bytes:
+        """
+        convert private key to compressed public key
+        :param private_key: private key
+        :return: compressed public key
+        """
         key_hex = cls.__private2public(private_key)
         # get x from key (first half)
         key_string = str(key_hex, 'utf8')
@@ -95,10 +147,26 @@ class KeyFactory:
         return str(codecs.encode(ripemd160_bpk_digest, 'hex'), 'utf8')
 
     @classmethod
-    def new(cls, private_key=None) -> Key:
+    def new(cls, private_key=None) -> Account:
+        """
+        create a new account from the given private key and returns it as a :class:`~asimov.data_type.Account`
+        :param private_key:
+        :return: then account object
+
+        .. code-block:: python
+
+            >>> from asimov import AccountFactory
+            >>> account = AccountFactory.new("bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> account.address
+            '0x66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a'
+            >>> account.private_key
+            '0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056'
+            >>> account.public_key
+            b'023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601'
+        """
         if private_key is None:
             private_key = PrivateKeyFactory.generate_key()
-        return cls.private2key_pair(private_key)
+        return cls.private2account(private_key)
 
 
 class Address:

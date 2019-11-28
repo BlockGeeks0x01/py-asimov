@@ -7,8 +7,19 @@ from .data_type import EvmLog, EvmLogs
 
 # https://codeburst.io/deep-dive-into-ethereum-logs-a8d2047c7371
 class EvmLogParser:
+    """
+    The primary entry point for working with Asimov smart contract execution logs.
+    """
+
     @classmethod
     def parse(cls, raw_log: Union[dict, list], abi: Union[dict, str]) -> EvmLogs:
+        """
+        Parse asimov vm execution log
+
+        :param raw_log: Smart contract execution log
+        :param abi: Smart contract abi
+        :return: parsed log list
+        """
         if isinstance(abi, str):
             abi = json.loads(abi)
         if type(raw_log) is dict:

@@ -24,13 +24,13 @@ test:
 	pytest tests
 
 build-docs:
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
+	sphinx-apidoc -f -o docs/source ./asimov
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
-	$(MAKE) -C docs doctest
+#	$(MAKE) -C docs doctest
 
 docs: build-docs
-	open docs/_build/html/index.html
+	open docs/build/html/index.html
 
 linux-docs: build-docs
 	xdg-open docs/_build/html/index.html

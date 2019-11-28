@@ -1,6 +1,6 @@
 def test_import():
     from asimov import (
-        KeyFactory,
+        AccountFactory,
         Address,
         Transaction
     )

@@ -7,7 +7,7 @@ from asimov import (
     Template,
     constant,
     Contract,
-    KeyFactory,
+    AccountFactory,
     Asset,
 )
 
@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # node.set_rpc_server("http://localhost:8545")
     # replace to your private key
     # node.set_private_key("0x3197eb7cd1538b26cf2398caa5986f1744934fb43e0b7f2a71c947bba0da3b48")
-    node.set_private_key("0x8dd839d5b978f113047ac9d08035ebf1b58ecd5ae6e92049f411e9d659be31f6")
+    node.set_private_key("0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3")
     # node.set_private_key("0xafd29358a5ba9e2f5aac5cd5013a6830a99e34a68c469c78ab5f4c6f1d8c2a46")
 
     # call rpc method
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     # check contract balance
     assert contract.read("checkBalance") == 9900 * constant.COIN
     # transfer to other address
-    assert node.send(KeyFactory.new().address, 1 * constant.COIN, asset_type).check() is constant.SUCCESS
+    assert node.send(AccountFactory.new().address, 1 * constant.COIN, asset_type).check() is constant.SUCCESS
     # check balance
     assert node.balance(asset=asset_type) == 99 * constant.COIN
     # burn
@@ -69,6 +69,8 @@ if __name__ == '__main__':
     assert contract.read("voteValues", [88]) == 0
     tx = contract.vote("vote", [88], 1, asset_type)
     assert tx.check() is constant.SUCCESS
+    # check balance
+    assert node.balance(asset=asset_type) == 1 * constant.COIN
     logs = contract.fetch(tx.id)
     # fetch logs
     print(logs)

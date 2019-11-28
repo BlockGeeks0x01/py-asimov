@@ -57,7 +57,7 @@ contract Tutorial is Template {
     /// voteId => voted asset
     mapping (uint=>uint) public voteValues;
 
-    event vote_log(uint);
+    event vote_log(uint vote_value);
 
     constructor(string _name) public {
         organizationName = _name;

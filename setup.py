@@ -14,6 +14,7 @@ extras_require = {
     'lint': [],
     'doc': [
         "Sphinx>=2.2.1,<3",
+        "sphinx-rtd-theme>=0.4.3,<1",
     ],
     'dev': [
         "pytest-watch>=4.2.0,<5",
