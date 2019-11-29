@@ -3,6 +3,7 @@
 ![PyPI - License](https://img.shields.io/pypi/l/py-asimov?color=1&style=plastic)
 ![PyPI](https://img.shields.io/pypi/v/py-asimov?style=plastic)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py-asimov?style=plastic)
+[![Documentation Status](https://readthedocs.org/projects/py-asimov/badge/?version=latest)](https://py-asimov.readthedocs.io/en/latest/?badge=latest)
 
 ## Quickstart
 

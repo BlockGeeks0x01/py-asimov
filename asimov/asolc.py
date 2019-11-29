@@ -8,8 +8,10 @@ class AsimovSolc:
     def set_solidity_compiler(cls, compiler_path: str):
         """
         set solidity compiler path
+
         :param compiler_path: solidity compiler path
-        :return:
+        :return: None
+
         .. code-block:: python
 
             >>> from asimov import AsimovSolc
@@ -21,6 +23,7 @@ class AsimovSolc:
     def compile(cls, source_file: str, **kwargs) -> dict:
         """
         compile solidity source file
+
         :param source_file: source file path
         :param kwargs:
         :return:

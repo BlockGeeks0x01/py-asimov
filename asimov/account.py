@@ -54,6 +54,7 @@ class AccountFactory:
     def generate_address(cls, private_key: str) -> str:
         """
         create a asimov address with the given private key
+
         :param private_key: the private key
         :return: an hex address converted from private key, without 0x prefix.
 
@@ -71,6 +72,7 @@ class AccountFactory:
     def private2account(cls, private_key: str) -> Account:
         """
         convert private key to account and returns it as a :class:`~asimov.data_type.Account`
+
         :param private_key: the private key
         :return: an object with private key, address and convenience methods.
 
@@ -104,6 +106,7 @@ class AccountFactory:
     def private2public(cls, private_key: str) -> bytes:
         """
         convert private key to public key
+
         :param private_key: private key
         :return: public key
         """
@@ -114,6 +117,7 @@ class AccountFactory:
     def private2compressed_public(cls, private_key: str) -> bytes:
         """
         convert private key to compressed public key
+
         :param private_key: private key
         :return: compressed public key
         """
@@ -150,6 +154,7 @@ class AccountFactory:
     def new(cls, private_key=None) -> Account:
         """
         create a new account from the given private key and returns it as a :class:`~asimov.data_type.Account`
+
         :param private_key:
         :return: then account object
 

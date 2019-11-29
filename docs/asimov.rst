@@ -7,7 +7,6 @@ Account
 .. automodule:: asimov.account
     :members:
     :undoc-members:
-    :show-inheritance:
 
 Asolc
 -------------------
@@ -15,7 +14,6 @@ Asolc
 .. automodule:: asimov.asolc
     :members:
     :undoc-members:
-    :show-inheritance:
 
 Contract
 ----------------------
@@ -23,7 +21,6 @@ Contract
 .. automodule:: asimov.contract
     :members:
     :undoc-members:
-    :show-inheritance:
 
 data\_type
 ------------------------
@@ -39,7 +36,6 @@ Node
 .. automodule:: asimov.node
     :members:
     :undoc-members:
-    :show-inheritance:
 
 Template
 ----------------------
@@ -47,7 +43,6 @@ Template
 .. automodule:: asimov.template
     :members:
     :undoc-members:
-    :show-inheritance:
 
 Transactions
 --------------------------
@@ -55,7 +50,6 @@ Transactions
 .. automodule:: asimov.transactions
     :members:
     :undoc-members:
-    :show-inheritance:
 
 vm\_log
 ---------------------
@@ -63,4 +57,3 @@ vm\_log
 .. automodule:: asimov.vm_log
     :members:
     :undoc-members:
-    :show-inheritance:

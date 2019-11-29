@@ -51,9 +51,10 @@ class Contract:
     def read(self, func_name, args=None):
         """
         calls a view method in the contract and returns the execution result
+
         :param func_name: view method function name
         :param args: function arguments
-        :return: the result of the funciton
+        :return: the result of the function
 
         .. code-block:: python
 
@@ -70,6 +71,7 @@ class Contract:
                 tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
         """
         sends a transaction to execute a method in the contract and returns the transaction object :class:`~asimov.data_type.Tx`
+
         :param func_name: contract function name
         :param args: function arguments
         :param asset_value: the asset value to be send
@@ -97,6 +99,7 @@ class Contract:
     def vote(self, func_name, args=None, vote_value=0, asset_type=ASCOIN, tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
         """
         sends a transaction to vote on a contract and returns the transaction object :class:`~asimov.data_type.Tx`
+
         :param func_name:
         :param args:
         :param vote_value:
@@ -124,6 +127,7 @@ class Contract:
     def fetch(self, tx_id) -> EvmLogs:
         """
         fetch the contract transaction execution logs
+
         :param tx_id: contract transaction id
         :return:
         """

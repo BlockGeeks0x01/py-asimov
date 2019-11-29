@@ -14,7 +14,7 @@ from ._utils.encode import AsimovJsonEncoder, encode_transaction_data, encode_pa
 from .transactions import Transaction
 
 
-class Node(object):
+class Node:
     def __init__(self, provider: str = None, private_key: str = None):
         self.session = requests.session()
         self.session.headers.update({"Content-type": "application/json"})
@@ -53,6 +53,7 @@ class Node(object):
     def call(self, method: str, args: list = None):
         """
         call asimov rpc function
+
         :param method: rpc function name
         :param args: rpc function arguments
         :return: rpc function result
@@ -127,6 +128,7 @@ class Node(object):
         """
         If the transaction is a normal transaction, this function checks wheter a transaction is confirmed on chain.
         If the transaction is a contract transaction, this function checks wheter a transaction is confirmed on chain and return contract execution status
+
         :param tx_id: transaction id
         :return:
 
@@ -291,6 +293,7 @@ class Node(object):
              tx_fee_value=0, tx_fee_type=constant.ASCOIN) -> Tx:
         """
         sends a normal transaction on asimov blockchain and returns the transaction object :class:`~asimov.data_type.Tx`
+
         :param address:
         :param asset_value:
         :param asset_type:
