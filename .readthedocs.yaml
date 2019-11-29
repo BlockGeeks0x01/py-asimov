@@ -1,2 +1,1 @@
-build:
-    image: latest
+requirements_file: docs/requirements.txt
