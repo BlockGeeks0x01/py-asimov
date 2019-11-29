@@ -1,0 +1,1261 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>py-asimov &mdash; py-asimov 0.0.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="releases.html" />
+    <link rel="prev" title="py-asimov" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> py-asimov
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">py-asimov</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.account">Account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.asolc">Asolc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.constant">constant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.contract">Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.data_type">data_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.error">error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.node">Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.transactions">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-asimov.vm_log">vm_log</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-asimov</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>py-asimov</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/asimov.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="py-asimov">
+<h1>py-asimov<a class="headerlink" href="#py-asimov" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-asimov.account">
+<span id="account"></span><h2>Account<a class="headerlink" href="#module-asimov.account" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.account.AccountFactory">
+<em class="property">class </em><code class="descclassname">asimov.account.</code><code class="descname">AccountFactory</code><a class="headerlink" href="#asimov.account.AccountFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The primary entry point for working with Asimov private keys.</p>
+<p>It does <strong>not</strong> require a connection to an Asimov node.</p>
+<dl class="classmethod">
+<dt id="asimov.account.AccountFactory.generate_address">
+<em class="property">classmethod </em><code class="descname">generate_address</code><span class="sig-paren">(</span><em>private_key: str</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.account.AccountFactory.generate_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a asimov address with the given private key
+:param private_key: the private key
+:return: an hex address converted from private key, without 0x prefix.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">AccountFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AccountFactory</span><span class="o">.</span><span class="n">generate_address</span><span class="p">(</span><span class="s2">&quot;bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&quot;</span><span class="p">)</span>
+<span class="go">&#39;66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.account.AccountFactory.new">
+<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>private_key=None</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Account<a class="headerlink" href="#asimov.account.AccountFactory.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a new account from the given private key and returns it as a <a class="reference internal" href="#asimov.data_type.Account" title="asimov.data_type.Account"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></a>
+:param private_key:
+:return: then account object</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">AccountFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span> <span class="o">=</span> <span class="n">AccountFactory</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">address</span>
+<span class="go">&#39;0x66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">private_key</span>
+<span class="go">&#39;0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">public_key</span>
+<span class="go">b&#39;023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.account.AccountFactory.private2account">
+<em class="property">classmethod </em><code class="descname">private2account</code><span class="sig-paren">(</span><em>private_key: str</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Account<a class="headerlink" href="#asimov.account.AccountFactory.private2account" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert private key to account and returns it as a <a class="reference internal" href="#asimov.data_type.Account" title="asimov.data_type.Account"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></a>
+:param private_key: the private key
+:return: an object with private key, address and convenience methods.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">AccountFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span> <span class="o">=</span> <span class="n">AccountFactory</span><span class="o">.</span><span class="n">private2account</span><span class="p">(</span><span class="s2">&quot;bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">address</span>
+<span class="go">&#39;0x66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">private_key</span>
+<span class="go">&#39;0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">public_key</span>
+<span class="go">b&#39;023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.account.AccountFactory.private2compressed_public">
+<em class="property">classmethod </em><code class="descname">private2compressed_public</code><span class="sig-paren">(</span><em>private_key: str</em><span class="sig-paren">)</span> &#x2192; bytes<a class="headerlink" href="#asimov.account.AccountFactory.private2compressed_public" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert private key to compressed public key
+:param private_key: private key
+:return: compressed public key</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.account.AccountFactory.private2public">
+<em class="property">classmethod </em><code class="descname">private2public</code><span class="sig-paren">(</span><em>private_key: str</em><span class="sig-paren">)</span> &#x2192; bytes<a class="headerlink" href="#asimov.account.AccountFactory.private2public" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert private key to public key
+:param private_key: private key
+:return: public key</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.account.Address">
+<em class="property">class </em><code class="descclassname">asimov.account.</code><code class="descname">Address</code><span class="sig-paren">(</span><em>address: str</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.account.Address.is_pay_to_contract_hash">
+<code class="descname">is_pay_to_contract_hash</code><a class="headerlink" href="#asimov.account.Address.is_pay_to_contract_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.account.Address.is_pay_to_pub_hash">
+<code class="descname">is_pay_to_pub_hash</code><a class="headerlink" href="#asimov.account.Address.is_pay_to_pub_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.account.Address.to_contract_hash_script">
+<code class="descname">to_contract_hash_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address.to_contract_hash_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.account.Address.to_create_contract_hash_script">
+<em class="property">static </em><code class="descname">to_create_contract_hash_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address.to_create_contract_hash_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.account.Address.to_create_template_hash_script">
+<em class="property">static </em><code class="descname">to_create_template_hash_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address.to_create_template_hash_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.account.Address.to_create_vote_hash_script">
+<code class="descname">to_create_vote_hash_script</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address.to_create_vote_hash_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.account.Address.to_script_pub_key">
+<code class="descname">to_script_pub_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.account.Address.to_script_pub_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.account.Address.to_str">
+<code class="descname">to_str</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.account.Address.to_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.account.Address.type">
+<code class="descname">type</code><a class="headerlink" href="#asimov.account.Address.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.account.PrivateKeyFactory">
+<em class="property">class </em><code class="descclassname">asimov.account.</code><code class="descname">PrivateKeyFactory</code><a class="headerlink" href="#asimov.account.PrivateKeyFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Private key generator</p>
+<dl class="attribute">
+<dt id="asimov.account.PrivateKeyFactory.CURVE_ORDER">
+<code class="descname">CURVE_ORDER</code><em class="property"> = 115792089237316195423570985008687907852837564279074904382605163141518161494337</em><a class="headerlink" href="#asimov.account.PrivateKeyFactory.CURVE_ORDER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.account.PrivateKeyFactory.KEY_BYTES">
+<code class="descname">KEY_BYTES</code><em class="property"> = 32</em><a class="headerlink" href="#asimov.account.PrivateKeyFactory.KEY_BYTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.account.PrivateKeyFactory.generate_key">
+<em class="property">classmethod </em><code class="descname">generate_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.account.PrivateKeyFactory.generate_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new private key and return it.
+:return: a string represents private key</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">PrivateKeyFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">PrivateKeyFactory</span><span class="o">.</span><span class="n">generate_key</span><span class="p">()</span>
+<span class="go">&#39;bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056&#39;</span>
+
+<span class="go"># note that the key generated above is and random value, it may be different on your system</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.asolc">
+<span id="asolc"></span><h2>Asolc<a class="headerlink" href="#module-asimov.asolc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.asolc.AsimovSolc">
+<em class="property">class </em><code class="descclassname">asimov.asolc.</code><code class="descname">AsimovSolc</code><a class="headerlink" href="#asimov.asolc.AsimovSolc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="classmethod">
+<dt id="asimov.asolc.AsimovSolc.compile">
+<em class="property">classmethod </em><code class="descname">compile</code><span class="sig-paren">(</span><em>source_file: str</em>, <em>**kwargs</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#asimov.asolc.AsimovSolc.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>compile solidity source file
+:param source_file: source file path
+:param kwargs:
+:return:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">AsimovSolc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">AsimovSolc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;~/contracts/tutorial.sol&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">dict_keys([&#39;Template&#39;, &#39;TemplateWarehouse&#39;, &#39;StringLib&#39;, &#39;Registry&#39;, &#39;Tutorial&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;Tutorial&#39;</span><span class="p">])</span>
+<span class="go">asimov.data_type.SmartContract</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.asolc.AsimovSolc.set_solidity_compiler">
+<em class="property">classmethod </em><code class="descname">set_solidity_compiler</code><span class="sig-paren">(</span><em>compiler_path: str</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.asolc.AsimovSolc.set_solidity_compiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>set solidity compiler path
+:param compiler_path: solidity compiler path
+:return:
+.. code-block:: python</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="k">import</span> <span class="n">AsimovSolc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AsimovSolc</span><span class="o">.</span><span class="n">set_solidity_compiler</span><span class="p">(</span><span class="s2">&quot;/usr/local/bin/solc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.constant">
+<span id="constant"></span><h2>constant<a class="headerlink" href="#module-asimov.constant" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.constant.AddressType">
+<em class="property">class </em><code class="descclassname">asimov.constant.</code><code class="descname">AddressType</code><a class="headerlink" href="#asimov.constant.AddressType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.constant.AddressType.ContractHash">
+<code class="descname">ContractHash</code><em class="property"> = 99</em><a class="headerlink" href="#asimov.constant.AddressType.ContractHash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AddressType.PubKeyHash">
+<code class="descname">PubKeyHash</code><em class="property"> = 102</em><a class="headerlink" href="#asimov.constant.AddressType.PubKeyHash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.constant.AsimovOpCode">
+<em class="property">class </em><code class="descclassname">asimov.constant.</code><code class="descname">AsimovOpCode</code><a class="headerlink" href="#asimov.constant.AsimovOpCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_CALL">
+<code class="descname">OP_CALL</code><em class="property"> = CScriptOp(0xc2)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_CALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_CREATE">
+<code class="descname">OP_CREATE</code><em class="property"> = CScriptOp(0xc1)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_CREATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_DATA_21">
+<code class="descname">OP_DATA_21</code><em class="property"> = CScriptOp(0x15)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_DATA_21" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_IFLAG_EQUAL">
+<code class="descname">OP_IFLAG_EQUAL</code><em class="property"> = CScriptOp(0xc4)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_IFLAG_EQUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_IFLAG_EQUALVERIFY">
+<code class="descname">OP_IFLAG_EQUALVERIFY</code><em class="property"> = CScriptOp(0xc5)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_IFLAG_EQUALVERIFY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_SPEND">
+<code class="descname">OP_SPEND</code><em class="property"> = CScriptOp(0xc3)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_SPEND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_TEMPLATE">
+<code class="descname">OP_TEMPLATE</code><em class="property"> = CScriptOp(0xc0)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.AsimovOpCode.OP_VOTE">
+<code class="descname">OP_VOTE</code><em class="property"> = CScriptOp(0xc6)</em><a class="headerlink" href="#asimov.constant.AsimovOpCode.OP_VOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.constant.ContractFunType">
+<em class="property">class </em><code class="descclassname">asimov.constant.</code><code class="descname">ContractFunType</code><a class="headerlink" href="#asimov.constant.ContractFunType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.constant.ContractFunType.CONSTRUCTOR">
+<code class="descname">CONSTRUCTOR</code><em class="property"> = 'constructor'</em><a class="headerlink" href="#asimov.constant.ContractFunType.CONSTRUCTOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.ContractFunType.EVENT">
+<code class="descname">EVENT</code><em class="property"> = 'event'</em><a class="headerlink" href="#asimov.constant.ContractFunType.EVENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.ContractFunType.FALLBACK">
+<code class="descname">FALLBACK</code><em class="property"> = 'fallback'</em><a class="headerlink" href="#asimov.constant.ContractFunType.FALLBACK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.ContractFunType.FUN">
+<code class="descname">FUN</code><em class="property"> = 'function'</em><a class="headerlink" href="#asimov.constant.ContractFunType.FUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.constant.TxType">
+<em class="property">class </em><code class="descclassname">asimov.constant.</code><code class="descname">TxType</code><a class="headerlink" href="#asimov.constant.TxType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.constant.TxType.CALL">
+<code class="descname">CALL</code><em class="property"> = 'call'</em><a class="headerlink" href="#asimov.constant.TxType.CALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.TxType.CREATE">
+<code class="descname">CREATE</code><em class="property"> = 'create'</em><a class="headerlink" href="#asimov.constant.TxType.CREATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.TxType.TEMPLATE">
+<code class="descname">TEMPLATE</code><em class="property"> = 'template'</em><a class="headerlink" href="#asimov.constant.TxType.TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.TxType.VOTE">
+<code class="descname">VOTE</code><em class="property"> = 'vote'</em><a class="headerlink" href="#asimov.constant.TxType.VOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.constant.UtxoSelectPolicy">
+<em class="property">class </em><code class="descclassname">asimov.constant.</code><code class="descname">UtxoSelectPolicy</code><a class="headerlink" href="#asimov.constant.UtxoSelectPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.constant.UtxoSelectPolicy.NORMAL">
+<code class="descname">NORMAL</code><em class="property"> = 'normal'</em><a class="headerlink" href="#asimov.constant.UtxoSelectPolicy.NORMAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.constant.UtxoSelectPolicy.VOTE">
+<code class="descname">VOTE</code><em class="property"> = 'vote'</em><a class="headerlink" href="#asimov.constant.UtxoSelectPolicy.VOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.contract">
+<span id="contract"></span><h2>Contract<a class="headerlink" href="#module-asimov.contract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.contract.Contract">
+<em class="property">class </em><code class="descclassname">asimov.contract.</code><code class="descname">Contract</code><span class="sig-paren">(</span><em>node: asimov.node.Node</em>, <em>address: str = None</em>, <em>c: asimov.data_type.SmartContract = None</em>, <em>template_name: str = None</em>, <em>args: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.contract.Contract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="asimov.contract.Contract.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>func_name</em>, <em>args=None</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000'</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Tx<a class="headerlink" href="#asimov.contract.Contract.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends a transaction to execute a method in the contract and returns the transaction object <a class="reference internal" href="#asimov.data_type.Tx" title="asimov.data_type.Tx"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tx</span></code></a>
+:param func_name: contract function name
+:param args: function arguments
+:param asset_value: the asset value to be send
+:param asset_type: the asset type to be send
+:param tx_fee_value: the transaction fee value
+:param tx_fee_type: the transaction fee type
+:return: the transaction object</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">contract</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;mint&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1000000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.contract.Contract.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><em>tx_id</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.EvmLogs<a class="headerlink" href="#asimov.contract.Contract.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>fetch the contract transaction execution logs
+:param tx_id: contract transaction id
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.contract.Contract.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>func_name</em>, <em>args=None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.contract.Contract.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls a view method in the contract and returns the execution result
+:param func_name: view method function name
+:param args: function arguments
+:return: the result of the funciton</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">contract</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;checkBalance&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.contract.Contract.vote">
+<code class="descname">vote</code><span class="sig-paren">(</span><em>func_name</em>, <em>args=None</em>, <em>vote_value=0</em>, <em>asset_type='000000000000000000000000'</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000'</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Tx<a class="headerlink" href="#asimov.contract.Contract.vote" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends a transaction to vote on a contract and returns the transaction object <a class="reference internal" href="#asimov.data_type.Tx" title="asimov.data_type.Tx"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tx</span></code></a>
+:param func_name:
+:param args:
+:param vote_value:
+:param asset_type:
+:param tx_fee_value:
+:param tx_fee_type:
+:return:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">contract</span><span class="o">.</span><span class="n">vote</span><span class="p">(</span><span class="s2">&quot;vote&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="asimov.contract.encode_transaction_data">
+<code class="descclassname">asimov.contract.</code><code class="descname">encode_transaction_data</code><span class="sig-paren">(</span><em>fn_identifier</em>, <em>contract_abi=None</em>, <em>fn_abi=None</em>, <em>args=None</em>, <em>kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.contract.encode_transaction_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-asimov.data_type">
+<span id="data-type"></span><h2>data_type<a class="headerlink" href="#module-asimov.data_type" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.data_type.Account">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">Account</code><span class="sig-paren">(</span><em>private_key=None</em>, <em>address=None</em>, <em>public_key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.Account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.Asset">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">Asset</code><span class="sig-paren">(</span><em>contract</em>, <em>asset_type: int</em>, <em>asset_index: int</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.Asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="asimov.data_type.Asset.asset2str">
+<em class="property">static </em><code class="descname">asset2str</code><span class="sig-paren">(</span><em>asset: int</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.data_type.Asset.asset2str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.Asset.asset_id_int">
+<code class="descname">asset_id_int</code><a class="headerlink" href="#asimov.data_type.Asset.asset_id_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.Asset.asset_id_str">
+<code class="descname">asset_id_str</code><a class="headerlink" href="#asimov.data_type.Asset.asset_id_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.data_type.Asset.asset_wrapper">
+<em class="property">static </em><code class="descname">asset_wrapper</code><span class="sig-paren">(</span><em>asset_type</em>, <em>org_id</em>, <em>asset_index</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.data_type.Asset.asset_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>asimov asset wrapper</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>asset_type</strong> – asset type, the first bit of first byte, 0 is divided, 1 is undivided. The first bit of second byte, 0 if unvotable, 1 is votable.</li>
+<li><strong>org_id</strong> – organization id</li>
+<li><strong>asset_index</strong> – asset index in organization, should be equal</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">asset id</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.ContractTemplate">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">ContractTemplate</code><span class="sig-paren">(</span><em>template_name</em>, <em>category</em>, <em>source</em>, <em>abi</em>, <em>byte_code</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.ContractTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="attribute">
+<dt id="asimov.data_type.ContractTemplate.abi">
+<code class="descname">abi</code><a class="headerlink" href="#asimov.data_type.ContractTemplate.abi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.ContractTemplate.byte_code">
+<code class="descname">byte_code</code><a class="headerlink" href="#asimov.data_type.ContractTemplate.byte_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.ContractTemplate.category">
+<code class="descname">category</code><a class="headerlink" href="#asimov.data_type.ContractTemplate.category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.ContractTemplate.source">
+<code class="descname">source</code><a class="headerlink" href="#asimov.data_type.ContractTemplate.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.ContractTemplate.template_name">
+<code class="descname">template_name</code><a class="headerlink" href="#asimov.data_type.ContractTemplate.template_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.EvmLog">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">EvmLog</code><span class="sig-paren">(</span><em>raw_log</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.EvmLog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.data_type.EvmLog.address">
+<code class="descname">address</code><em class="property"> = None</em><a class="headerlink" href="#asimov.data_type.EvmLog.address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.EvmLog.block_hash">
+<code class="descname">block_hash</code><em class="property"> = None</em><a class="headerlink" href="#asimov.data_type.EvmLog.block_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.EvmLog.data">
+<code class="descname">data</code><em class="property"> = None</em><a class="headerlink" href="#asimov.data_type.EvmLog.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.EvmLog.topics">
+<code class="descname">topics</code><em class="property"> = None</em><a class="headerlink" href="#asimov.data_type.EvmLog.topics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.EvmLog.transaction_hash">
+<code class="descname">transaction_hash</code><em class="property"> = None</em><a class="headerlink" href="#asimov.data_type.EvmLog.transaction_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.EvmLogs">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">EvmLogs</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.EvmLogs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+<dl class="method">
+<dt id="asimov.data_type.EvmLogs.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.EvmLogs.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.SmartContract">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">SmartContract</code><span class="sig-paren">(</span><em>source</em>, <em>abi</em>, <em>bytecode</em>, <em>address</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.SmartContract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="attribute">
+<dt id="asimov.data_type.SmartContract.abi">
+<code class="descname">abi</code><a class="headerlink" href="#asimov.data_type.SmartContract.abi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.SmartContract.address">
+<code class="descname">address</code><a class="headerlink" href="#asimov.data_type.SmartContract.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.SmartContract.bytecode">
+<code class="descname">bytecode</code><a class="headerlink" href="#asimov.data_type.SmartContract.bytecode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.SmartContract.source">
+<code class="descname">source</code><a class="headerlink" href="#asimov.data_type.SmartContract.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.data_type.Tx">
+<em class="property">class </em><code class="descclassname">asimov.data_type.</code><code class="descname">Tx</code><span class="sig-paren">(</span><em>node</em>, <em>_id=None</em>, <em>vin=None</em>, <em>vout=None</em>, <em>signed_hex=None</em>, <em>gas_limit=0</em>, <em>is_contract_tx=False</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.data_type.Tx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="asimov.data_type.Tx.check">
+<code class="descname">check</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.data_type.Tx.check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.data_type.Tx.id">
+<code class="descname">id</code><a class="headerlink" href="#asimov.data_type.Tx.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.error">
+<span id="error"></span><h2>error<a class="headerlink" href="#module-asimov.error" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="asimov.error.CompileError">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">CompileError</code><a class="headerlink" href="#asimov.error.CompileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>compile error</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.CompileTimeout">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">CompileTimeout</code><a class="headerlink" href="#asimov.error.CompileTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>compile timeout</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.InvalidParams">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">InvalidParams</code><a class="headerlink" href="#asimov.error.InvalidParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>invalid parameters</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.InvalidPrivateKey">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">InvalidPrivateKey</code><a class="headerlink" href="#asimov.error.InvalidPrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>invalid private key</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.InvalidTxType">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">InvalidTxType</code><a class="headerlink" href="#asimov.error.InvalidTxType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>invalid tx type</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.JsonException">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">JsonException</code><a class="headerlink" href="#asimov.error.JsonException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>json</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.NetWorkError">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">NetWorkError</code><a class="headerlink" href="#asimov.error.NetWorkError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>network error</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.NoAvailableKey">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">NoAvailableKey</code><a class="headerlink" href="#asimov.error.NoAvailableKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>no available key</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.NoUtxoError">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">NoUtxoError</code><a class="headerlink" href="#asimov.error.NoUtxoError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>no available utxo</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.NotEnoughMoney">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">NotEnoughMoney</code><a class="headerlink" href="#asimov.error.NotEnoughMoney" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>not enough money</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.RPCError">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">RPCError</code><a class="headerlink" href="#asimov.error.RPCError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>rpc response error</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.UnSupportSolidityImportType">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">UnSupportSolidityImportType</code><a class="headerlink" href="#asimov.error.UnSupportSolidityImportType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>solidity import error</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="asimov.error.UnknownError">
+<em class="property">exception </em><code class="descclassname">asimov.error.</code><code class="descname">UnknownError</code><a class="headerlink" href="#asimov.error.UnknownError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">asimov.error._BaseException</span></code></p>
+<p>Unknown</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.node">
+<span id="node"></span><h2>Node<a class="headerlink" href="#module-asimov.node" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.node.Node">
+<em class="property">class </em><code class="descclassname">asimov.node.</code><code class="descname">Node</code><span class="sig-paren">(</span><em>provider: str = None</em>, <em>private_key: str = None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="asimov.node.Node.address">
+<code class="descname">address</code><a class="headerlink" href="#asimov.node.Node.address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.balance">
+<code class="descname">balance</code><span class="sig-paren">(</span><em>address: str = None</em>, <em>asset='000000000000000000000000'</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.node.Node.balance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.broadcast">
+<code class="descname">broadcast</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; asimov.data_type.Tx<a class="headerlink" href="#asimov.node.Node.broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>equal to sign &amp; send</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.node.Node.build_data_of_create_template">
+<em class="property">static </em><code class="descname">build_data_of_create_template</code><span class="sig-paren">(</span><em>category</em>, <em>name</em>, <em>hex_code</em>, <em>abi</em>, <em>source='solidity source code'</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.node.Node.build_data_of_create_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.node.Node.build_data_of_deploy_contract">
+<em class="property">static </em><code class="descname">build_data_of_deploy_contract</code><span class="sig-paren">(</span><em>contract_template: asimov.data_type.ContractTemplate</em>, <em>params: list</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.node.Node.build_data_of_deploy_contract" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.build_tx">
+<code class="descname">build_tx</code><span class="sig-paren">(</span><em>inputs: list</em>, <em>outputs: list</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.build_tx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.call">
+<code class="descname">call</code><span class="sig-paren">(</span><em>method: str</em>, <em>args: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>call asimov rpc function
+:param method: rpc function name
+:param args: rpc function arguments
+:return: rpc function result</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">Node</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;http://seed.asimov.tech&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;getBlockChainInfo&quot;</span><span class="p">)</span>
+<span class="go">{&#39;chain&#39;: &#39;devnet&#39;,</span>
+<span class="go"> &#39;blocks&#39;: 6841,</span>
+<span class="go"> &#39;bestblockhash&#39;: &#39;329a4289a46b5e6e6a7e63744338d63d9065c264a87f17c82bf13853806cc3ef&#39;,</span>
+<span class="go"> &#39;mediantime&#39;: 1574942764,</span>
+<span class="go"> &#39;pruned&#39;: False}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.call_readonly_function">
+<code class="descname">call_readonly_function</code><span class="sig-paren">(</span><em>contract_address: str</em>, <em>data: str</em>, <em>func_name: str</em>, <em>abi: str</em>, <em>caller_address: str = None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.call_readonly_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.call_write_function">
+<code class="descname">call_write_function</code><span class="sig-paren">(</span><em>func_name: str = None</em>, <em>params: tuple = None</em>, <em>abi=None</em>, <em>contract_address: str = '0x660000000000000000000000000000000000000000'</em>, <em>contract_tx_data=None</em>, <em>contract_type='call'</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.call_write_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.check">
+<code class="descname">check</code><span class="sig-paren">(</span><em>tx_id: str</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.node.Node.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the transaction is a normal transaction, this function checks wheter a transaction is confirmed on chain.
+If the transaction is a contract transaction, this function checks wheter a transaction is confirmed on chain and return contract execution status
+:param tx_id: transaction id
+:return:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">constant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;http://seed.asimov.tech&quot;</span><span class="p">,</span> <span class="s2">&quot;0xafd29358a5ba9e2f5aac5cd5013a6830a99e34a68c469c78ab5f4c6f1d8c2a46&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;0x663bc0936166c07431ed04d7dc207eb7694e223ec4&quot;</span><span class="p">,</span> <span class="n">asset_value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">tx_fee_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go"># wait tx on chain</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">tx</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="ow">is</span> <span class="n">constant</span><span class="o">.</span><span class="n">SUCCESS</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.node.Node.create_contract_tx_output">
+<em class="property">static </em><code class="descname">create_contract_tx_output</code><span class="sig-paren">(</span><em>address: str</em>, <em>amount: int</em>, <em>data: str</em>, <em>assets: str = '000000000000000000000000'</em>, <em>contract_type='call'</em><span class="sig-paren">)</span> &#x2192; dict<a class="headerlink" href="#asimov.node.Node.create_contract_tx_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="asimov.node.Node.create_tx_output">
+<em class="property">static </em><code class="descname">create_tx_output</code><span class="sig-paren">(</span><em>address: str</em>, <em>amount: int</em>, <em>assets: str = '000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.create_tx_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.node.Node.current_height">
+<code class="descname">current_height</code><a class="headerlink" href="#asimov.node.Node.current_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.estimate_call_contract_gas">
+<code class="descname">estimate_call_contract_gas</code><span class="sig-paren">(</span><em>contract: asimov.data_type.SmartContract</em>, <em>func_name</em>, <em>params=None</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.estimate_call_contract_gas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.estimate_create_template_gas">
+<code class="descname">estimate_create_template_gas</code><span class="sig-paren">(</span><em>data</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.estimate_create_template_gas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.estimate_deploy_contract_gas">
+<code class="descname">estimate_deploy_contract_gas</code><span class="sig-paren">(</span><em>data</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.estimate_deploy_contract_gas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.estimate_vote_gas">
+<code class="descname">estimate_vote_gas</code><span class="sig-paren">(</span><em>contract: asimov.data_type.SmartContract</em>, <em>func_name</em>, <em>vote_value</em>, <em>params=None</em>, <em>asset_type='000000000000000000000000'</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.estimate_vote_gas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.gas_limit">
+<code class="descname">gas_limit</code><span class="sig-paren">(</span><em>v: int</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.gas_limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.get_balance">
+<code class="descname">get_balance</code><span class="sig-paren">(</span><em>address: str</em>, <em>asset=None</em><span class="sig-paren">)</span> &#x2192; [&lt;class 'dict'&gt;]<a class="headerlink" href="#asimov.node.Node.get_balance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.get_contract_template">
+<code class="descname">get_contract_template</code><span class="sig-paren">(</span><em>address=None</em>, <em>key=None</em>, <em>name=None</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.ContractTemplate<a class="headerlink" href="#asimov.node.Node.get_contract_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="asimov.node.Node.private_key">
+<code class="descname">private_key</code><a class="headerlink" href="#asimov.node.Node.private_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>address</em>, <em>asset_value: int</em>, <em>asset_type='000000000000000000000000'</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000'</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Tx<a class="headerlink" href="#asimov.node.Node.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends a normal transaction on asimov blockchain and returns the transaction object <a class="reference internal" href="#asimov.data_type.Tx" title="asimov.data_type.Tx"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tx</span></code></a>
+:param address:
+:param asset_value:
+:param asset_type:
+:param tx_fee_value:
+:param tx_fee_type:
+:return:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">constant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;http://seed.asimov.tech&quot;</span><span class="p">,</span> <span class="s2">&quot;0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;0x663bc0936166c07431ed04d7dc207eb7694e223ec4&quot;</span><span class="p">,</span> <span class="n">asset_value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">asset_type</span><span class="o">=</span><span class="n">constant</span><span class="o">.</span><span class="n">ASCOIN</span><span class="p">,</span> <span class="n">tx_fee_value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tx_fee_type</span><span class="o">=</span><span class="n">constant</span><span class="o">.</span><span class="n">ASCOIN</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.set_private_key">
+<code class="descname">set_private_key</code><span class="sig-paren">(</span><em>private_key</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.set_private_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.set_rpc_server">
+<code class="descname">set_rpc_server</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.Node.set_rpc_server" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.node.Node.wait_for_confirmation">
+<code class="descname">wait_for_confirmation</code><span class="sig-paren">(</span><em>tx_id</em>, <em>confirm_num=1</em>, <em>timeout=60</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#asimov.node.Node.wait_for_confirmation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="asimov.node.encode_transaction_data">
+<code class="descclassname">asimov.node.</code><code class="descname">encode_transaction_data</code><span class="sig-paren">(</span><em>fn_identifier</em>, <em>contract_abi=None</em>, <em>fn_abi=None</em>, <em>args=None</em>, <em>kwargs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.node.encode_transaction_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-asimov.template">
+<span id="template"></span><h2>Template<a class="headerlink" href="#module-asimov.template" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.template.Template">
+<em class="property">class </em><code class="descclassname">asimov.template.</code><code class="descname">Template</code><span class="sig-paren">(</span><em>node: asimov.node.Node</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.template.Template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="asimov.template.Template.deploy_contract">
+<code class="descname">deploy_contract</code><span class="sig-paren">(</span><em>template_id: str</em>, <em>constructor_arguments=None</em>, <em>asset_value=0</em>, <em>asset_type='000000000000000000000000'</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000') -&gt; (&lt;class 'asimov.data_type.Tx'&gt;</em>, <em>&lt;class 'str'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.template.Template.deploy_contract" title="Permalink to this definition">¶</a></dt>
+<dd><p>deploys a contract based on a given template id and
+returns the address of the newly deployed contract on asimov blockchain and transaction object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>template_id</strong> – </li>
+<li><strong>constructor_arguments</strong> – </li>
+<li><strong>asset_value</strong> – </li>
+<li><strong>asset_type</strong> – </li>
+<li><strong>tx_fee_value</strong> – </li>
+<li><strong>tx_fee_type</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Template</span><span class="p">,</span> <span class="n">constant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;http://seed.asimov.tech&quot;</span><span class="p">,</span> <span class="s2">&quot;0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;tutorial.sol&quot;</span><span class="p">,</span> <span class="s2">&quot;template name1&quot;</span><span class="p">,</span> <span class="s2">&quot;Tutorial&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">tx</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="ow">is</span> <span class="n">constant</span><span class="o">.</span><span class="n">SUCCESS</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">deploy_contract</span><span class="p">(</span><span class="n">tx</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="go">[id: 2b7af42268f1ae098bc959d52c2c7d05af9cb44b2f2b6c8cfeb5c3afab941d5b]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.template.Template.submit">
+<code class="descname">submit</code><span class="sig-paren">(</span><em>source</em>, <em>template_name</em>, <em>chosen_contract</em>, <em>tx_fee_value=0</em>, <em>tx_fee_type='000000000000000000000000'</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.Tx<a class="headerlink" href="#asimov.template.Template.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>submits a new template to asimov blockchain and returns the transaction object <a class="reference internal" href="#asimov.data_type.Tx" title="asimov.data_type.Tx"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tx</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>source</strong> – smart contract source file path</li>
+<li><strong>template_name</strong> – template name</li>
+<li><strong>chosen_contract</strong> – contract name</li>
+<li><strong>tx_fee_value</strong> – </li>
+<li><strong>tx_fee_type</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">asimov</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">Template</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;http://seed.asimov.tech&quot;</span><span class="p">,</span> <span class="s2">&quot;0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;tutorial.sol&quot;</span><span class="p">,</span> <span class="s2">&quot;template name1&quot;</span><span class="p">,</span> <span class="s2">&quot;Tutorial&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span>
+<span class="go">[id: 8414ceb0d6db9c6418cd62c022168d961e69de80f662f0cdd99669f5954955ae]</span>
+<span class="go"># template id</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tx</span><span class="o">.</span><span class="n">id</span>
+<span class="go">&#39;8414ceb0d6db9c6418cd62c022168d961e69de80f662f0cdd99669f5954955ae&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-asimov.transactions">
+<span id="transactions"></span><h2>Transactions<a class="headerlink" href="#module-asimov.transactions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.transactions.AsimovScript">
+<em class="property">class </em><code class="descclassname">asimov.transactions.</code><code class="descname">AsimovScript</code><a class="headerlink" href="#asimov.transactions.AsimovScript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="classmethod">
+<dt id="asimov.transactions.AsimovScript.SignatureHash">
+<em class="property">classmethod </em><code class="descname">SignatureHash</code><span class="sig-paren">(</span><em>tx: asimov.transactions.Transaction</em>, <em>in_idx</em>, <em>sub_script</em>, <em>hash_type=1</em><span class="sig-paren">)</span> &#x2192; bytes<a class="headerlink" href="#asimov.transactions.AsimovScript.SignatureHash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="asimov.transactions.AsimovScript.sign">
+<em class="property">classmethod </em><code class="descname">sign</code><span class="sig-paren">(</span><em>tx: asimov.transactions.Transaction</em>, <em>key_pair: asimov.data_type.Account</em>, <em>in_idx</em>, <em>sub_script</em>, <em>hash_type=1</em><span class="sig-paren">)</span> &#x2192; bytes<a class="headerlink" href="#asimov.transactions.AsimovScript.sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.transactions.Transaction">
+<em class="property">class </em><code class="descclassname">asimov.transactions.</code><code class="descname">Transaction</code><span class="sig-paren">(</span><em>vin=()</em>, <em>vout=()</em>, <em>nLockTime=0</em>, <em>nVersion=1</em>, <em>gas_limit=0</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.Transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="asimov.transactions.Transaction.parse_sign_hex">
+<em class="property">static </em><code class="descname">parse_sign_hex</code><span class="sig-paren">(</span><em>sign_hex</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.Transaction.parse_sign_hex" title="Permalink to this definition">¶</a></dt>
+<dd><p>parse signed tx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.Transaction.serialize_size">
+<code class="descname">serialize_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.transactions.Transaction.serialize_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.Transaction.sign">
+<code class="descname">sign</code><span class="sig-paren">(</span><em>sig_type=1</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.Transaction.sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.Transaction.to_buffer_writer">
+<code class="descname">to_buffer_writer</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; _io.StringIO<a class="headerlink" href="#asimov.transactions.Transaction.to_buffer_writer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.Transaction.to_hex">
+<code class="descname">to_hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#asimov.transactions.Transaction.to_hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.transactions.TxInput">
+<em class="property">class </em><code class="descclassname">asimov.transactions.</code><code class="descname">TxInput</code><span class="sig-paren">(</span><em>vin: dict</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.TxInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="asimov.transactions.TxInput.serialize_size">
+<code class="descname">serialize_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.transactions.TxInput.serialize_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.TxInput.write_buffer">
+<code class="descname">write_buffer</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.TxInput.write_buffer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="asimov.transactions.TxOutput">
+<em class="property">class </em><code class="descclassname">asimov.transactions.</code><code class="descname">TxOutput</code><span class="sig-paren">(</span><em>output: dict</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.TxOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="asimov.transactions.TxOutput.serialize_size">
+<code class="descname">serialize_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.transactions.TxOutput.serialize_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="asimov.transactions.TxOutput.write_buffer">
+<code class="descname">write_buffer</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#asimov.transactions.TxOutput.write_buffer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="asimov.transactions.VarIntSerializeSize">
+<code class="descclassname">asimov.transactions.</code><code class="descname">VarIntSerializeSize</code><span class="sig-paren">(</span><em>val: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#asimov.transactions.VarIntSerializeSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-asimov.vm_log">
+<span id="vm-log"></span><h2>vm_log<a class="headerlink" href="#module-asimov.vm_log" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="asimov.vm_log.EvmLogParser">
+<em class="property">class </em><code class="descclassname">asimov.vm_log.</code><code class="descname">EvmLogParser</code><a class="headerlink" href="#asimov.vm_log.EvmLogParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The primary entry point for working with Asimov smart contract execution logs.</p>
+<dl class="classmethod">
+<dt id="asimov.vm_log.EvmLogParser.parse">
+<em class="property">classmethod </em><code class="descname">parse</code><span class="sig-paren">(</span><em>raw_log: Union[dict, list], abi: Union[dict, str]</em><span class="sig-paren">)</span> &#x2192; asimov.data_type.EvmLogs<a class="headerlink" href="#asimov.vm_log.EvmLogParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse asimov vm execution log</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>raw_log</strong> – Smart contract execution log</li>
+<li><strong>abi</strong> – Smart contract abi</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">parsed log list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="releases.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="py-asimov" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, The Asimov Foundation
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

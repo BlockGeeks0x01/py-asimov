@@ -1,5 +1,5 @@
-asimov
-======
+pyasimov
+========
 
 .. toctree::
    :maxdepth: 4

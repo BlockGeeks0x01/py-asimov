@@ -54,16 +54,12 @@ class Asset:
     @staticmethod
     def asset_wrapper(asset_type, org_id, asset_index) -> int:
         """
-        大端模式
-        12个字节  平均三部分  每部分4字节
-        第一部分是资产属性，其中第一个字节的第一个bit表示是否可分割, 0可分，1不可分;
-                            第二个字节的第一个bit表示是否可投票, 0不可，1可投票
-        第二部分是组织id 注册中心给组织生成的
-        第三部分是资产索引值 表示该资产是该组织的第几号资产
-        :param asset_type:
-        :param org_id:
-        :param asset_index:
-        :return:
+        asimov asset wrapper
+
+        :param asset_type: asset type, the first bit of first byte, 0 is divided, 1 is undivided. The first bit of second byte, 0 if unvotable, 1 is votable.
+        :param org_id: organization id
+        :param asset_index: asset index in organization, should be equal
+        :return: asset id
         """
         return (asset_type << 64) + (org_id << 32) + asset_index
 

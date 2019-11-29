@@ -106,6 +106,7 @@ class Contract:
         :return:
 
         .. code-block:: python
+
             >>> contract.vote("vote", [1]).check()
         """
         return self.node.call_write_function(

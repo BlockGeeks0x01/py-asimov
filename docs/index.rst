@@ -1,7 +1,7 @@
 py-asimov
 ==============================
 
-Sign and send Asimov transaction with local private keys
+SDK for developing python script to test and deploy contracts on Asimov chain
 
 Contents
 --------
@@ -11,7 +11,6 @@ Contents
 
    asimov
    releases
-
 
 
 Indices and tables

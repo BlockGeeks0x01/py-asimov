@@ -13,7 +13,7 @@ extras_require = {
     ],
     'lint': [],
     'doc': [
-        "Sphinx>=2.2.1,<3",
+        "Sphinx>=1.8.5,<2",
         "sphinx-rtd-theme>=0.4.3,<1",
     ],
     'dev': [
