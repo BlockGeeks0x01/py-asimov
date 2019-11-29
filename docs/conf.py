@@ -193,4 +193,4 @@ epub_exclude_files = ['search.html']
 todo_include_todos = False
 
 
-autodoc_mock_imports = ["asimov", "python-bitcointx", "fastecdsa"]
+autodoc_mock_imports = ["bitcointx", "fastecdsa"]
