@@ -14,7 +14,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../asimov'))
+sys.path.insert(0, os.path.abspath('..'))
 
 DIR = os.path.dirname('__file__')
 with open(os.path.join(DIR, '../setup.py'), 'r') as f:
