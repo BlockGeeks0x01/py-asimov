@@ -17,14 +17,6 @@ Asolc
     :undoc-members:
     :show-inheritance:
 
-constant
-----------------------
-
-.. automodule:: asimov.constant
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Contract
 ----------------------
 
@@ -37,14 +29,6 @@ data\_type
 ------------------------
 
 .. automodule:: asimov.data_type
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-error
--------------------
-
-.. automodule:: asimov.error
     :members:
     :undoc-members:
     :show-inheritance:
