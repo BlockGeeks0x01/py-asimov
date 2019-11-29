@@ -33,7 +33,7 @@ extras_require['dev'] = (
 
 setup(
     name="py-asimov",
-    version='0.0.3',
+    version='0.0.4',
     keywords="asimov",
     description="""sdk for asimov chain""",
     long_description=long_description,
