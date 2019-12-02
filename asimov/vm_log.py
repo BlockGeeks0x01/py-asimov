@@ -16,8 +16,8 @@ class EvmLogParser:
         """
         Parse asimov vm execution log
 
-        :param raw_log: Smart contract execution log
-        :param abi: Smart contract abi
+        :param raw_log: contract execution log
+        :param abi: contract abi object in json format
         :return: parsed log list
         """
         if isinstance(abi, str):
