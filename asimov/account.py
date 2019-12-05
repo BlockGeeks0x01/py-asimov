@@ -19,13 +19,15 @@ from .constant import AddressType, AsimovOpCode
 
 class PrivateKeyFactory:
     """Private key generator"""
-    KEY_BYTES = 32
-    CURVE_ORDER = int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16)
+
+    _KEY_BYTES = 32
+    _CURVE_ORDER = int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141', 16)
 
     @classmethod
     def generate_key(cls) -> str:
         """
         Create a new private key and return it.
+
         :return: a string represents private key
 
         .. code-block:: python
@@ -36,10 +38,10 @@ class PrivateKeyFactory:
 
             # note that the key generated above is and random value, it may be different on your system
         """
-        big_int = secrets.randbits(cls.KEY_BYTES * 8)
-        big_int %= cls.CURVE_ORDER - 1
+        big_int = secrets.randbits(cls._KEY_BYTES * 8)
+        big_int %= cls._CURVE_ORDER - 1
         big_int += 1
-        key = hex(big_int)[2:].zfill(cls.KEY_BYTES * 2)
+        key = hex(big_int)[2:].zfill(cls._KEY_BYTES * 2)
         return key
 
 
@@ -73,8 +75,8 @@ class AccountFactory:
         """
         convert private key to account and returns it as a :class:`~asimov.data_type.Account`
 
-        :param private_key: the private key
-        :return: an object with private key, address and convenience methods.
+        :param private_key: the private key to be converted
+        :return: an :class:`~asimov.data_type.Account` object with private key, address and convenience methods.
 
         .. code-block:: python
 
@@ -108,7 +110,13 @@ class AccountFactory:
         convert private key to public key
 
         :param private_key: private key
-        :return: public key
+        :return: public key: public key in bytes format
+
+        .. code-block: python
+
+            >>> from asimov import AccountFactory
+            >>> AccountFactory.private2public("0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> b'043a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c76016fb60b2b472d6caf316c699cb38f61d5daef3792402461ddc449a18b0fc8ee32'
         """
         key_hex = cls.__private2public(private_key)
         return cls.__add_bitcoin_byte(key_hex)
@@ -119,7 +127,13 @@ class AccountFactory:
         convert private key to compressed public key
 
         :param private_key: private key
-        :return: compressed public key
+        :return: compressed public key in bytes format
+
+        .. code-block: python
+
+            >>> from asimov import AccountFactory
+            >>> AccountFactory.private2compressed_public("0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> b'023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601'
         """
         key_hex = cls.__private2public(private_key)
         # get x from key (first half)
@@ -155,8 +169,8 @@ class AccountFactory:
         """
         create a new account from the given private key and returns it as a :class:`~asimov.data_type.Account`
 
-        :param private_key:
-        :return: then account object
+        :param private_key: give the private key or generate a new private randomly
+        :return: an :class:`~asimov.data_type.Account` object
 
         .. code-block:: python
 

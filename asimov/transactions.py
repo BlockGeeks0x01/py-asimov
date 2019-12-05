@@ -33,7 +33,7 @@ class TxInput:
         self.sequence = DEFAULT_SEQUENCE
         self.scriptPubKey = vin['scriptPubKey']
         self.sig_script = None
-        self.signed_key: Account = vin.get('signed_key')     # 解锁这个输入脚本的key
+        self.signed_key: Account = vin.get('signed_key')
 
     def write_buffer(self, buf):
         buf.write(self.prev_tx_id)

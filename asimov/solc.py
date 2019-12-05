@@ -4,12 +4,17 @@ from .data_type import SmartContract
 
 
 class AsimovSolc:
+    """
+    The primary entry point for working with solidity compiler.
+    """
+
     @classmethod
-    def set_solidity_compiler(cls, compiler_path: str):
+    def set_solidity_compiler(cls, compiler_path: str) -> None:
         """
         set solidity compiler path
 
         :param compiler_path: solidity compiler path
+
         :return: None
 
         .. code-block:: python
@@ -21,21 +26,30 @@ class AsimovSolc:
 
     @classmethod
     def compile(cls, source_file: str, **kwargs) -> dict:
-        """
+        r"""
         compile solidity source file
 
         :param source_file: source file path
-        :param kwargs:
-        :return:
+        :param kwargs: reference to compile_files function in `py-solc <https://github.com/ethereum/py-solc>`_ library
+        :type kwargs: dict
+
+        :return: multiple compiled contract objects in dict type
 
         .. code-block:: python
 
             >>> from asimov import AsimovSolc
-            >>> c = AsimovSolc.compile("~/contracts/tutorial.sol")
-            >>> c.keys()
-            dict_keys(['Template', 'TemplateWarehouse', 'StringLib', 'Registry', 'Tutorial'])
-            >>> type(c['Tutorial'])
-            asimov.data_type.SmartContract
+            >>> AsimovSolc.compile("/path/to/my/sources/example.sol")
+            {'Example': {'abi': [{'inputs': [],
+                       'payable': False,
+                       'stateMutability': 'nonpayable',
+                       'type': 'constructor'}],
+              'address': None,
+              'bytecode': '6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820bf199053a6eea79c7732c9211fc200781b170db435d118cbd86d2ac117e2fa360029',
+              'source': 'pragma solidity ^0.4.25;\n'
+                        '\n'
+                        'contract Example {\n'
+                        '    constructor() public {}\n'
+                        '}\n'}}
         """
         with open(source_file) as f:
             source_code = f.read()
@@ -48,4 +62,5 @@ class AsimovSolc:
                 compiled_objects[key]['bin']
             )
         return contracts
+
 

@@ -12,7 +12,7 @@ pip install py-asimov
 ```
 
 ## API
-[pyasimov api](./api.md)
+Read more in the [documentation on ReadTheDocs](https://py-asimov.readthedocs.io/en/latest/)
 
 ## Tutorial
 [Tutorial](./tutorial.md)

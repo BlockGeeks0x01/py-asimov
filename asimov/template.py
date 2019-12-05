@@ -1,5 +1,5 @@
 from .node import Node
-from .asolc import AsimovSolc
+from .solc import AsimovSolc
 from .data_type import SmartContract, Tx
 from .constant import ASCOIN, TxType
 
@@ -15,9 +15,9 @@ class Template:
         :param source: smart contract source file path
         :param template_name: template name
         :param chosen_contract: contract name
-        :param tx_fee_value:
-        :param tx_fee_type:
-        :return:
+        :param tx_fee_value: the transaction fee value
+        :param tx_fee_type: the transaction fee type
+        :return: the transaction object :class:`~asimov.data_type.Tx`
 
         .. code-block:: python
 
@@ -35,7 +35,7 @@ class Template:
         tx_data = self.node.build_data_of_create_template(
             1, template_name, compiled_contract.bytecode, compiled_contract.abi, compiled_contract.source)
         return self.node.call_write_function(
-            contract_tx_data=tx_data, contract_type=TxType.TEMPLATE, tx_fee_value=tx_fee_value, tx_fee_type=tx_fee_type
+            contract_tx_data=tx_data, call_type=TxType.TEMPLATE, tx_fee_value=tx_fee_value, tx_fee_type=tx_fee_type
         ).broadcast()
 
     def deploy_contract(self, template_id: str, constructor_arguments=None,
@@ -44,13 +44,13 @@ class Template:
         deploys a contract based on a given template id and
         returns the address of the newly deployed contract on asimov blockchain and transaction object
 
-        :param template_id:
-        :param constructor_arguments:
-        :param asset_value:
-        :param asset_type:
-        :param tx_fee_value:
-        :param tx_fee_type:
-        :return:
+        :param template_id: template id
+        :param constructor_arguments: contract constructor arguments
+        :param asset_value: the asset value to be send
+        :param asset_type: the asset type to be send
+        :param tx_fee_value: the transaction fee value
+        :param tx_fee_type: the transaction fee type
+        :return: the transaction object :class:`~asimov.data_type.Tx` and the address of new contract
 
         .. code-block:: python
 
@@ -67,7 +67,7 @@ class Template:
         contract_template = self.node.get_contract_template(key=template_id)
         tx_data = self.node.build_data_of_deploy_contract(contract_template, constructor_arguments)
         tx = self.node.call_write_function(
-            contract_tx_data=tx_data, contract_type=TxType.CREATE,
+            contract_tx_data=tx_data, call_type=TxType.CREATE,
             asset_value=asset_value, asset_type=asset_type,
             tx_fee_value=tx_fee_value, tx_fee_type=tx_fee_type
         ).broadcast()

@@ -22,8 +22,8 @@ from asimov.account import (
 from asimov.transactions import Transaction
 from asimov.contract import Contract
 from asimov.node import Node
-from asimov.asolc import AsimovSolc
-from asimov.vm_log import EvmLogParser
+from asimov.solc import AsimovSolc
+from asimov.evm_log import EvmLogParser
 from asimov.template import Template
 from asimov import constant
 from asimov.data_type import Asset

@@ -194,3 +194,8 @@ todo_include_todos = False
 
 
 autodoc_mock_imports = ["bitcointx", "fastecdsa"]
+
+
+# intersphinx_mapping = {
+#     'python': ('https://docs.python.org/3.7', None),
+# }

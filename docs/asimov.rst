@@ -6,14 +6,12 @@ Account
 
 .. automodule:: asimov.account
     :members:
-    :undoc-members:
 
-Asolc
+Solc
 -------------------
 
-.. automodule:: asimov.asolc
+.. automodule:: asimov.solc
     :members:
-    :undoc-members:
 
 Contract
 ----------------------
@@ -22,13 +20,12 @@ Contract
     :members:
     :undoc-members:
 
-data\_type
+Data\_type
 ------------------------
 
 .. automodule:: asimov.data_type
     :members:
     :undoc-members:
-    :show-inheritance:
 
 Node
 ------------------
@@ -44,16 +41,9 @@ Template
     :members:
     :undoc-members:
 
-Transactions
---------------------------
-
-.. automodule:: asimov.transactions
-    :members:
-    :undoc-members:
-
-vm\_log
+Evm\_log
 ---------------------
 
-.. automodule:: asimov.vm_log
+.. automodule:: asimov.evm_log
     :members:
     :undoc-members:
