@@ -42,7 +42,7 @@ setup(
     author="The Asimov Foundation",
     author_email="ericsgy@163.com",
     include_package_data=True,
-    url="https://gitlab.asimov.work/asimov/asimov-python-sdk",
+    url="https://gitlab.asimov.work/guyuchuan/asimov-python-sdk",
     install_requires=[
         "fastecdsa>=1.7.4,<2",
         "eth-utils>=1.8.0,<2",
