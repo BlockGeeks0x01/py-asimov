@@ -26,9 +26,9 @@ class PrivateKeyFactory:
     @classmethod
     def generate_key(cls) -> str:
         """
-        Create a new private key and return it.
+        Create a new private key and return.
 
-        :return: a string represents private key
+        :return: a private key in string form.
 
         .. code-block:: python
 
@@ -36,7 +36,7 @@ class PrivateKeyFactory:
             >>> PrivateKeyFactory.generate_key()
             'bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056'
 
-            # note that the key generated above is and random value, it may be different on your system
+            # note that the key generated above is a random value, it will be different in your try
         """
         big_int = secrets.randbits(cls._KEY_BYTES * 8)
         big_int %= cls._CURVE_ORDER - 1
@@ -55,10 +55,10 @@ class AccountFactory:
     @classmethod
     def generate_address(cls, private_key: str) -> str:
         """
-        create a asimov address with the given private key
+        create an asimov address with the given private key
 
         :param private_key: the private key
-        :return: an hex address converted from private key, without 0x prefix.
+        :return: an hex address generated from private key, without 0x prefix.
 
         .. code-block:: python
 
@@ -73,10 +73,10 @@ class AccountFactory:
     @classmethod
     def private2account(cls, private_key: str) -> Account:
         """
-        convert private key to account and returns it as a :class:`~asimov.data_type.Account`
+        convert private key to account and return as a :class:`~asimov.data_type.Account`
 
-        :param private_key: the private key to be converted
-        :return: an :class:`~asimov.data_type.Account` object with private key, address and convenience methods.
+        :param private_key: the private key
+        :return: an :class:`~asimov.data_type.Account` object with address, private key and public key.
 
         .. code-block:: python
 
@@ -107,10 +107,10 @@ class AccountFactory:
     @classmethod
     def private2public(cls, private_key: str) -> bytes:
         """
-        convert private key to public key
+        generate public key from private key
 
         :param private_key: private key
-        :return: public key: public key in bytes format
+        :return: public key in bytes format
 
         .. code-block: python
 
@@ -124,7 +124,7 @@ class AccountFactory:
     @classmethod
     def private2compressed_public(cls, private_key: str) -> bytes:
         """
-        convert private key to compressed public key
+        generate compressed public key from private key
 
         :param private_key: private key
         :return: compressed public key in bytes format
@@ -167,9 +167,9 @@ class AccountFactory:
     @classmethod
     def new(cls, private_key=None) -> Account:
         """
-        create a new account from the given private key and returns it as a :class:`~asimov.data_type.Account`
+        create a new account from the given private key and return as a :class:`~asimov.data_type.Account`
 
-        :param private_key: give the private key or generate a new private randomly
+        :param private_key: private key, if None, a new private key will be generated
         :return: an :class:`~asimov.data_type.Account` object
 
         .. code-block:: python

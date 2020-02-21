@@ -26,7 +26,7 @@ class AsimovSolc:
 
     @classmethod
     def compile(cls, source_file: str, **kwargs) -> dict:
-        r"""
+        """
         compile solidity source file
 
         :param source_file: source file path

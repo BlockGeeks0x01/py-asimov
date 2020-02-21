@@ -17,25 +17,25 @@ def __smart_contract_repr(c):
 SmartContract = namedtuple("SmartContract", ("source", "abi", "bytecode", "address"))
 SmartContract.__new__.__defaults__ = (None,) * 4
 SmartContract.__repr__ = __smart_contract_repr
-SmartContract.__doc__ = "represents for compiled contract"
+SmartContract.__doc__ = "compiled contract"
 SmartContract.source.__doc__ = "contract source code"
 SmartContract.abi.__doc__ = "contract abi"
-SmartContract.bytecode.__doc__ = "contract byte code"
+SmartContract.bytecode.__doc__ = "contract bytecode"
 SmartContract.address.__doc__ = "contract address on chain"
 
 ContractTemplate = namedtuple("ContractTemplate", ("template_name", "category", "source", "abi", "byte_code"))
 ContractTemplate.__new__.__defaults__ = (None,) * 5
-ContractTemplate.__doc__ = "represents for contract template"
+ContractTemplate.__doc__ = "contract template"
 ContractTemplate.template_name.__doc__ = "template name"
 ContractTemplate.category.__doc__ = "template category"
 ContractTemplate.source.__doc__ = "template source code"
 ContractTemplate.abi.__doc__ = "template abi"
-ContractTemplate.byte_code.__doc__ = "template byte code"
+ContractTemplate.byte_code.__doc__ = "template bytecode"
 
 
 class Account:
     """
-    Present an asimov chain account, consists of private key, public key and corresponding address
+    Asimov account, consists of private key, public key and address
     """
     def __init__(self, private_key=None, address=None, public_key=None):
         self.private_key = private_key
@@ -82,8 +82,9 @@ class Tx:
 
     def check(self) -> int:
         """
-        check whether a transaction is on chain or the execution result of a contract transaction is success or failed
-        :return: 1 if on chain or success, or 0 otherwise.
+        check whether a normal transaction is confirmed on chain, or a contract call is successful or not
+        
+        :return: 1 if the transaction is confirmed on chain, or the contract call is successful
         """
         if self.is_contract_tx:
             return self.node.check(self.id)
@@ -94,6 +95,12 @@ class Tx:
 class Asset:
     """
     The primary entry point for working with asset on asimov chain.
+
+    Asimov asset consists of 3 parts
+
+    *. asset_type, 4 bytes long, each bit contains an asset property. For now, the first bit is used to determine whether an asset is divisible and the second bit is used to determine whether the asset is restricted.
+    *. org_id, 4 bytes long organization id, system wide unique id assigned to organization when registering to asimov platform.
+    *. asset_index, 4 bytes long asset index in organization, the assigning rule is determined by the organization itself.
     """
 
     @staticmethod
@@ -101,10 +108,10 @@ class Asset:
         """
         asimov asset wrapper
 
-        :param asset_type: asset type, the first bit of first byte, 0 is divided, 1 is undivided. The first bit of second byte, 0 if unvotable, 1 is votable.
-        :param org_id: organization id
-        :param asset_index: asset index in organization, should be equal
-        :return: asset id in int type
+        :param asset_type: asset type.
+        :param org_id: organization id.
+        :param asset_index: asset index.
+        :return: asimov asset id in int format
 
         .. code-block:: python
 
@@ -117,9 +124,9 @@ class Asset:
     @staticmethod
     def asset2str(asset: int) -> str:
         """
-        convert asset id from int type to string type
-        :param asset: asset id
-        :return: asset id in string format
+        convert asset id from int to hex string without 0x
+        :param asset: asset id in int format
+        :return: asset id in hex string format
 
         .. code-block:: python
 
@@ -148,14 +155,14 @@ class Asset:
     @property
     def asset_id_str(self) -> str:
         """
-        get the asset id in string format
+        get the asset id in hex string format
         """
         return self.asset2str(self.asset_id_int)
 
 
 class EvmLog:
     """
-    represents for contract execution log
+    contract execution log
     """
     def __init__(self, raw_log):
         self.address = raw_log['address']
@@ -171,7 +178,7 @@ class EvmLogs(list):
 
     def to_dict(self) -> dict:
         """
-        convert evm logs from list to dict, but may lose the logs of same name
+        convert evm logs from list to dict, which may lose the logs of the same name
         :return: evm logs in dict format
         """
         return {item['name']: item['args'] for item in self}

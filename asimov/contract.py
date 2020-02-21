@@ -54,9 +54,9 @@ class Contract:
 
     def read(self, func_name, args=None):
         """
-        calls a view method in the contract and returns the execution result
+        call a view/pure function in the contract and return the execution result
 
-        :param func_name: view method function name
+        :param func_name: function name
         :param args: function arguments
         :return: the return value of the readonly function
 
@@ -77,12 +77,11 @@ class Contract:
     def execute(self, func_name, args=None, asset_value=0, asset_type=ASCOIN,
                 tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
         """
-        sends a transaction to execute a method in the contract and \
-        returns the transaction object :class:`~asimov.data_type.Tx`
-        Note the returned :class:`~asimov.data_type.Tx` object is in pending status.You need to wait it confirmed on \
-        chain and check execution status
+        send a transaction to execute a function in the contract and return the transaction object :class:`~asimov.data_type.Tx`.
+        Note the returned :class:`~asimov.data_type.Tx` object is in pending status.
+        You need to check execution status constantly and wait it confirmed on chain.
 
-        :param func_name: contract function name
+        :param func_name: function name
         :param args: function arguments
         :param asset_value: the asset value to be send
         :param asset_type: the asset type to be send
@@ -111,9 +110,11 @@ class Contract:
 
     def vote(self, func_name, args=None, vote_value=0, asset_type=ASCOIN, tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
         """
-        sends a transaction to vote on a contract and returns the transaction object :class:`~asimov.data_type.Tx`
+        send a transaction to vote on a contract and return the transaction object :class:`~asimov.data_type.Tx`
+        Note the returned :class:`~asimov.data_type.Tx` object is in pending status.
+        You need to check execution status constantly and wait it confirmed on chain.
 
-        :param func_name: contract function name
+        :param func_name: function name
         :param args: function arguments
         :param vote_value: the value you wants to vote
         :param asset_type: the asset type to be send
@@ -142,7 +143,7 @@ class Contract:
 
     def fetch(self, tx_id) -> EvmLogs:
         """
-        fetch the contract transaction execution logs
+        fetch the contract execution logs in the transaction
 
         :param tx_id: contract transaction id
         :return: the :class:`~asimov.data_type.EvmLogs` object
