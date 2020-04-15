@@ -287,8 +287,8 @@ class Node:
         rst[asset_type] = 0
         rst[tx_fee_type] = 0
 
-        asset_value = max([asset_value, 1])
         if policy == constant.UtxoSelectPolicy.NORMAL:
+            asset_value = max([asset_value, 1])
             if tx_fee_value == 0:
                 utxos = self._get_utxo(self.address, asset_type, asset_value)
             else:
