@@ -13,11 +13,13 @@ Asimov Python SDK has been fully tested on Python 3.7+.
 
 ### Install secp256k1
 It is an optimized C library for EC operations on curve secp256k1.
-Follow instructions on [specp256k1](https://github.com/bitcoin-core/secp256k1) to finish the installation.
+Follow instructions on [specp256k1](https://github.com/bitcoin-core/secp256k1) to finish the installation. 
+
+> You need to install automake on MacOS to run the scripts in secp256k1. Run `brew install automake`.
 
 > Note: If you see the error message like `Cannot import secp256k1: libsecp256k1.so.0: cannot open shared object file...`
-> when execute `pip install py-asimov`.Let's assume `LIBDIR` is `/usr/local/lib`, then you can add `LIBDIR` to the `LD_LIBRARY_PATH` environment variable like
-> `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib` on Fedora/CentOS/RHEL.
+> when execute `pip install py-asimov`. You can add `LIBDIR` to the `LD_LIBRARY_PATH` environment variable like
+> `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib` on Fedora/CentOS/RHEL. (Let's assume `LIBDIR` is `/usr/local/lib` in this case).
 
 ### Install gmp for fastecdsa
 Py-Asimov use [fastecdsa](https://pypi.org/project/fastecdsa/) library for fast elliptic curve crypto.

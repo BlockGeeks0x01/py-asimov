@@ -53,12 +53,12 @@ def find_matching_func(contract_abi, fn_name, fn_type):
     if len(abi) == 0:
         raise Exception(f"no match function: {fn_name}")
     if len(abi) > 1:
-        raise Exception(f"multiple match function: {fn_name}")
+        raise Exception(f"multiple match functions: {fn_name}")
     return abi[0]
 
 
 def package_contract_func_args(contract_abi, fn_name, fn_type, args: list) -> list:
-    """ 根据abi调整传入合约方法的参数类型 """
+    """ setup parameter types according to abi"""
     abi = find_matching_func(contract_abi, fn_name, fn_type)
 
     for idx, input in enumerate(abi['inputs']):

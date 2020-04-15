@@ -22,11 +22,11 @@ class JsonException(_BaseException):
 
 
 class RPCError(_BaseException):
-    """ rpc response error """
+    """rpc response error"""
 
 
 class NoAvailableKey(_BaseException):
-    """ no available key """
+    """no available key"""
 
 
 class InvalidPrivateKey(_BaseException):

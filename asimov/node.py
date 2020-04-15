@@ -34,8 +34,8 @@ class Node:
 
     def set_rpc_server(self, url: str):
         """
-        set rpc node url
-        :param url: node url
+        set rpc server url
+        :param url: rpc server url
         """
         self.provider = url
 
@@ -69,7 +69,7 @@ class Node:
 
     def call(self, method: str, args: list = None):
         """
-        call asimov rpc function
+        call asimov rpc service
 
         :param method: rpc function name
         :param args: rpc function arguments
@@ -107,13 +107,14 @@ class Node:
     def create_contract_tx_output(address: str, amount: int, data: str, assets: str = constant.ASCOIN,
                                   contract_type=constant.TxType.CALL) -> dict:
         """
-        create contract transaction output
+        create contract transaction output.
+        in asimov, contract call is wrapped in transaction output.
 
         :param address: output address
         :param amount: output amount
         :param data: output data
-        :param assets: output asset id in string format
-        :param contract_type: contract transaction type, default is call
+        :param assets: output asset id in hex string format
+        :param contract_type: contract call type, default is 'call'
         :return: output dict
         """
         return {
@@ -127,11 +128,11 @@ class Node:
     @staticmethod
     def create_tx_output(address: str, amount: int, assets: str = constant.ASCOIN):
         """
-        create transaction output
+        create transaction output.
 
         :param address: output address
         :param amount: output amount
-        :param assets: output asset id in string format
+        :param assets: output asset id in hex string format
         :return: output dict
         """
         return {
@@ -142,11 +143,11 @@ class Node:
 
     def balance(self, address: str = None, asset=constant.ASCOIN) -> Union[int, dict]:
         """
-        get the balance of specific address and asset
+        get the balance of specific address by given asset type
 
         :param address: specific address, default is current node account address
-        :param asset: specific address, return all asset balance if given none
-        :return: return a single balance value if specific a asset, otherwise return all asset balance
+        :param asset: asset type, will return balance for all asset types if none is given
+        :return: balance of given asset type, or balance for all asset types
         """
         if address is None:
             address = self.address
@@ -166,12 +167,12 @@ class Node:
 
     def check(self, tx_id: str) -> int:
         """
-        If the transaction is a normal transaction, this function checks wheter a transaction is confirmed on chain.
-        If the transaction is a contract transaction, this function checks wheter a transaction is confirmed on chain \
-        and return contract execution status
+        If the transaction is a normal transaction, this function checks whether a transaction is confirmed on chain.
+        If the transaction is a contract transaction, this function checks whether a transaction is confirmed on chain \
+        and returns contract execution status.
 
         :param tx_id: transaction id
-        :return: return 1 if on chain or execution success else 0.
+        :return: return 1 if the transaction is confirmed on chain and the execution result is success.
 
         .. code-block:: python
 
@@ -186,12 +187,29 @@ class Node:
         return int(receipt['status'], 16)
 
     def _get_utxo_in_page(self, address, asset, _from: int, count):
+        """
+        Get UTXO in page of a given address.
+
+        :param address: the address to get UTXO from
+        :param asset: asset type in hex string format
+        :param from: start position of the page
+        :param count: count of UTXO in the page
+        :return: UTXO of specifc address by given asset type in page
+        """
+
         rst = self.call("getUtxoInPage", [address, asset, _from, count])['utxos']
         for item in rst:
             item['amount'] = int(item['amount'] * constant.COIN)
         return rst
 
     def _get_utxo(self, address: str, asset=constant.ASCOIN, amount=1):
+        """
+        Get UTXO with specific asset type and amount of a given address
+
+        :param address: the address to get UTXO from
+        :param asset: asset type, hex string format, default value is '000000000000'
+        :param amount: asset amount, default is 1
+        """
         amount = max([amount, 1])
         utxos = []
         utxo_pool = []
@@ -216,19 +234,23 @@ class Node:
                 idx += 1000
 
     def _send_raw_trx(self, signed_tx: str):
+        """send signed raw transaction"""
+
         return self.call("sendRawTransaction", [signed_tx])
 
     def _get_raw_tx(self, tx_id: str, need_detail=False, need_extra=False):
+        """get raw transaction detail by transaction id"""
+
         return self.call("getRawTransaction", [tx_id, need_detail, need_extra])
 
     def wait_for_confirmation(self, tx_id, confirm_num=1, timeout=60) -> bool:
         """
-        wait for transaction confirmed on chain
+        wait for the transaction to be confirmed on chain
 
         :param tx_id: transaction id
-        :param confirm_num: confirmed block number
-        :param timeout: time out
-        :return: true if confirmed, false if timeout
+        :param confirm_num: confirmed block count, default is 1
+        :param timeout: time out length, default is 60 seconds
+        :return: true if confirmed, false otherwise
         """
         end_time = time.time() + timeout
         while time.time() < end_time:
@@ -239,6 +261,7 @@ class Node:
         return False
 
     def _get_best_block(self):
+        """get the best block"""
         return self.call("getBestBlock")
 
     @property
@@ -249,6 +272,13 @@ class Node:
         return self._get_best_block()['height']
 
     def _calc_contract_address(self, inputs: list, outputs: list):
+        """
+        calculate contract address from transaction inputs and outputs
+
+        :param inputs: transaction inputs
+        :param outputs: transaction outputs
+        :return: contract address
+        """
         outputs = copy.deepcopy(outputs)
         for output in outputs:
             output['amount'] = str(output['amount'])
@@ -259,7 +289,7 @@ class Node:
         get contract template object according to address, key or name
 
         :param address: contract address
-        :param key: template key
+        :param key: template key (template id)
         :param name: template name
         :return: the :class:`~asimov.data_type.ContractTemplate` object
         """
@@ -277,12 +307,25 @@ class Node:
 
     def _call_readonly_function(self, contract_address: str, data: str, func_name: str,
                                 abi: str, caller_address: str = None):
+        """
+        call a readonly function in a contract. a readonly function is marked as 'pure' or 'view'.
+
+        :param contract_address: the contract to call
+        :param data: binary data
+        :param func_name: the function name to call
+        :param abi: abi of the contract
+        :param caller_address: the address to make the contract call
+        """
         if caller_address is None:
             caller_address = self.address
         return self.call("callReadOnlyFunction", [caller_address, contract_address, data, func_name, abi])
 
     def _select_utxo(self, asset_value, asset_type, tx_fee_value, tx_fee_type,
                      policy=constant.UtxoSelectPolicy.NORMAL) -> dict:
+        """
+        select UTXO according to given parameters
+        """
+
         rst = dict()
         rst[asset_type] = 0
         rst[tx_fee_type] = 0
@@ -336,6 +379,10 @@ class Node:
             self, address, asset_value, asset_type=constant.ASCOIN,
             tx_fee_value=0, tx_fee_type=constant.ASCOIN
     ) -> (list, list):
+        """
+        build a transaction
+        """
+
         select_rst = self._select_utxo(asset_value, asset_type, tx_fee_value, tx_fee_type)
         outputs = [self.create_tx_output(address, asset_value, asset_type)]
         if asset_type == tx_fee_type:
@@ -352,11 +399,11 @@ class Node:
     def send(self, address, asset_value: int, asset_type=constant.ASCOIN,
              tx_fee_value=0, tx_fee_type=constant.ASCOIN) -> Tx:
         """
-        sends a normal transaction on asimov chain and returns the transaction object :class:`~asimov.data_type.Tx`
+        send a normal transaction on asimov chain and return the transaction object :class:`~asimov.data_type.Tx`
 
         :param address: target address
-        :param asset_value: send asset value
-        :param asset_type: send asset type
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
         :param tx_fee_value: transaction fee value
         :param tx_fee_type: transaction fee type
         :return: the :class:`~asimov.data_type.Tx` object
@@ -369,7 +416,7 @@ class Node:
             [id: 91c4645bcf3680c699a591632cd8769abe2973fd2de70081a6752d9781f2801b]
         """
         if asset_value < 1:
-            raise error.InvalidParams(f"need large than 1, got {asset_value}")
+            raise error.InvalidParams(f"value should ve larger than 1, got {asset_value}")
         tx = Transaction(*self._build_transfer(address, asset_value, asset_type, tx_fee_value, tx_fee_type))
         return Tx(node=self, _id=self._send_raw_trx(tx.sign().to_hex()))
 
@@ -379,18 +426,18 @@ class Node:
             tx_fee_value=0, tx_fee_type=constant.ASCOIN
     ):
         """
-        sends a transaction to execute a method in the contract, typically you don't need to call it manually
+        send a transaction to execute a method in the contract
 
         :param func_name: function name to be called in the contract
         :param params: call parameters
         :param abi: contract abi
         :param contract_address: contract address
-        :param contract_tx_data: data of the transaction
+        :param contract_tx_data: binary data of the transaction
         :param call_type: call type
-        :param asset_value:  the asset value to be send
-        :param asset_type: the asset type to be send
-        :param tx_fee_value: the transaction fee value
-        :param tx_fee_type: the transaction fee type
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
+        :param tx_fee_value: transaction fee value
+        :param tx_fee_type: transaction fee type
         :return: the :class:`~asimov.node.Node` object
         """
         select_policy = constant.UtxoSelectPolicy.VOTE if call_type == constant.TxType.VOTE \
@@ -448,9 +495,9 @@ class Node:
         :param contract: the :class:`~asimov.data_type.SmartContract` object
         :param func_name: function name
         :param params: call parameters
-        :param asset_value: the asset value to be send
-        :param asset_type: the asset type to be send
-        :return: estimate gas value
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
+        :return: estimated gas cost
         """
         data = remove_0x_prefix(encode_transaction_data(
             fn_identifier=func_name, contract_abi=contract.abi, args=params))
@@ -461,12 +508,12 @@ class Node:
 
     def estimate_deploy_contract_gas(self, data, asset_value=0, asset_type=constant.ASCOIN) -> int:
         """
-        estimate deploy contract gas cost
+        estimate contract deployment gas cost
 
         :param data: the data of transaction
-        :param asset_value: the asset value to be send
-        :param asset_type: the asset type to be send
-        :return: estimate gas value
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
+        :return: estimated gas cost
         """
         return self.call(
             "estimateGas",
@@ -475,12 +522,12 @@ class Node:
 
     def estimate_create_template_gas(self, data, asset_value=0, asset_type=constant.ASCOIN) -> int:
         """
-        estimate create contract gas cost
+        estimate template creation gas cost
 
         :param data: the data of transaction
-        :param asset_value: the asset value to be send
-        :param asset_type: the asset type to be send
-        :return: estimate gas value
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
+        :return: estimated gas cost
         """
         return self.call(
             "estimateGas",
@@ -496,8 +543,8 @@ class Node:
         :param func_name: function name
         :param vote_value: vote value
         :param params: vote function parameters
-        :param asset_type: the asset type to be send
-        :return: estimate gas value
+        :param asset_type: asset type to send
+        :return: estimated gas cost
         """
         data = remove_0x_prefix(encode_transaction_data(
             fn_identifier=func_name, contract_abi=contract.abi, args=params))
@@ -509,7 +556,7 @@ class Node:
     @staticmethod
     def build_data_of_deploy_contract(contract_template: ContractTemplate, params: list) -> str:
         """
-        create data of the deploy contract transaction, typically you don't need to call it manually
+        binary data for contract deployment transaction
 
         :param contract_template: the :class:`~asimov.data_type.ContractTemplate` object
         :param params: parameters of contract constructor function
@@ -525,7 +572,7 @@ class Node:
     @staticmethod
     def build_data_of_create_template(category, name, hex_code, abi, source="solidity source code") -> str:
         """
-        create data of the create template transaction, typically you don't need to call it manually
+        binary data for template creation transaction
 
         :param category: template category
         :param name: template name
@@ -557,7 +604,7 @@ class Node:
 
     def build_tx(self, inputs: list, outputs: list):
         """
-        build transaction according to inputs and outputs
+        build transaction with inputs and outputs
 
         :param inputs: input list
         :param outputs: output list
@@ -569,9 +616,9 @@ class Node:
 
     def gas_limit(self, v: int):
         """
-        set gas limit for transaction, typically you don't need to call it manually
+        set gas limit for transaction, if not set, the estimated gas cost will be used
 
-        :param v: gas value
+        :param v: gas limit
         """
         self.tx.gas_limit = v
         return self.tx

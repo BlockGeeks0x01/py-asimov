@@ -10,13 +10,13 @@ class Template:
 
     def submit(self, source, template_name, chosen_contract, tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
         """
-        submits a new template to asimov blockchain and returns the transaction object :class:`~asimov.data_type.Tx`
+        submit a new template to asimov blockchain and return the transaction object :class:`~asimov.data_type.Tx`
 
         :param source: smart contract source file path
         :param template_name: template name
         :param chosen_contract: contract name
-        :param tx_fee_value: the transaction fee value
-        :param tx_fee_type: the transaction fee type
+        :param tx_fee_value: transaction fee value
+        :param tx_fee_type: transaction fee type
         :return: the transaction object :class:`~asimov.data_type.Tx`
 
         .. code-block:: python
@@ -41,15 +41,15 @@ class Template:
     def deploy_contract(self, template_id: str, constructor_arguments=None,
                         asset_value=0, asset_type=ASCOIN, tx_fee_value=0, tx_fee_type=ASCOIN) -> (Tx, str):
         """
-        deploys a contract based on a given template id and
-        returns the address of the newly deployed contract on asimov blockchain and transaction object
+        deploy a contract based on a given template id and
+        return the address of the newly deployed contract on asimov blockchain and transaction object
 
         :param template_id: template id
         :param constructor_arguments: contract constructor arguments
-        :param asset_value: the asset value to be send
-        :param asset_type: the asset type to be send
-        :param tx_fee_value: the transaction fee value
-        :param tx_fee_type: the transaction fee type
+        :param asset_value: asset value to send
+        :param asset_type: asset type to send
+        :param tx_fee_value: transaction fee value
+        :param tx_fee_type: transaction fee type
         :return: the transaction object :class:`~asimov.data_type.Tx` and the address of new contract
 
         .. code-block:: python
