@@ -27,7 +27,7 @@ with open(os.path.join(DIR, '../setup.py'), 'r') as f:
 # -- Project information -----------------------------------------------------
 
 project = 'py-asimov'
-copyright = '2019, The Asimov Foundation'
+copyright = '2020, The Asimov Foundation'
 author = 'The Asimov Foundation'
 
 __version__ = setup_version

@@ -54,14 +54,15 @@ class Tx:
     The primary entry point for working with transaction object.
     """
 
-    def __init__(self, node, _id=None, vin=None, vout=None, signed_hex=None, gas_limit=0, is_contract_tx=False):
+    def __init__(self, node, transaction, _id=None, is_contract_tx=False):
         self.node = node
-        self.vin = vin
-        self.vout = vout
-        self.gas_limit = gas_limit
+        self.transaction = transaction
+        self.signed_hex = transaction.sign().to_hex()
         self._id = _id
-        self.signed_hex = signed_hex
         self.is_contract_tx = is_contract_tx
+
+    def __repr__(self):
+        return f"[id: {self.id}]"
 
     @property
     def id(self) -> str:
@@ -77,9 +78,6 @@ class Tx:
         """
         self._id = _id
 
-    def __repr__(self):
-        return f"[id: {self.id}]"
-
     def check(self) -> int:
         """
         check whether a normal transaction is confirmed on chain, or a contract call is successful or not
@@ -90,6 +88,14 @@ class Tx:
             return self.node.check(self.id)
         else:
             return SUCCESS if self.node.wait_for_confirmation(self.id) else FAILED
+
+    def broadcast(self):
+        """
+        broadcast the transaction
+        :return:
+        """
+        self._id = self.node._send_raw_trx(self.signed_hex)
+        return self
 
 
 class Asset:

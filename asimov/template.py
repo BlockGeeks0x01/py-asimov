@@ -8,14 +8,13 @@ class Template:
     def __init__(self, node: Node):
         self.node = node
 
-    def submit(self, source, template_name, chosen_contract, tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
+    def submit(self, source, template_name, chosen_contract, tx_fee_type=ASCOIN) -> Tx:
         """
         submit a new template to asimov blockchain and return the transaction object :class:`~asimov.data_type.Tx`
 
         :param source: smart contract source file path
         :param template_name: template name
         :param chosen_contract: contract name
-        :param tx_fee_value: transaction fee value
         :param tx_fee_type: transaction fee type
         :return: the transaction object :class:`~asimov.data_type.Tx`
 
@@ -35,11 +34,11 @@ class Template:
         tx_data = self.node.build_data_of_create_template(
             1, template_name, compiled_contract.bytecode, compiled_contract.abi, compiled_contract.source)
         return self.node.call_write_function(
-            contract_tx_data=tx_data, call_type=TxType.TEMPLATE, tx_fee_value=tx_fee_value, tx_fee_type=tx_fee_type
+            contract_tx_data=tx_data, call_type=TxType.TEMPLATE, tx_fee_type=tx_fee_type
         ).broadcast()
 
     def deploy_contract(self, template_id: str, constructor_arguments=None,
-                        asset_value=0, asset_type=ASCOIN, tx_fee_value=0, tx_fee_type=ASCOIN) -> (Tx, str):
+                        asset_value=0, asset_type=ASCOIN, tx_fee_type=ASCOIN) -> (Tx, str):
         """
         deploy a contract based on a given template id and
         return the address of the newly deployed contract on asimov blockchain and transaction object
@@ -48,7 +47,6 @@ class Template:
         :param constructor_arguments: contract constructor arguments
         :param asset_value: asset value to send
         :param asset_type: asset type to send
-        :param tx_fee_value: transaction fee value
         :param tx_fee_type: transaction fee type
         :return: the transaction object :class:`~asimov.data_type.Tx` and the address of new contract
 
@@ -69,7 +67,7 @@ class Template:
         tx = self.node.call_write_function(
             contract_tx_data=tx_data, call_type=TxType.CREATE,
             asset_value=asset_value, asset_type=asset_type,
-            tx_fee_value=tx_fee_value, tx_fee_type=tx_fee_type
+            tx_fee_type=tx_fee_type
         ).broadcast()
-        address = self.node._calc_contract_address(self.node.tx.vin, self.node.tx.vout)
+        address = self.node._calc_contract_address(tx.transaction.vin, tx.transaction.vout)
         return tx, address

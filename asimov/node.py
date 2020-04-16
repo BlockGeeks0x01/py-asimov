@@ -1,18 +1,24 @@
 import json
 import time
 import copy
+import math
 from typing import Union
 
 import requests
 from eth_utils.address import remove_0x_prefix
 from web3 import Web3
 
-from .data_type import Account, Tx, ContractTemplate, SmartContract
+from .data_type import Account, Tx, ContractTemplate
 from .account import AccountFactory
 from . import error
 from . import constant
 from ._utils.encode import AsimovJsonEncoder, encode_transaction_data, encode_params
+from ._utils.common import dict_add
 from .transactions import Transaction
+
+
+bytes_per_input = 148
+gas_per_byte = 21
 
 
 class Node:
@@ -155,11 +161,10 @@ class Node:
         rst = self.call("getBalance", [address])
         if asset is not None:
             rst = [e for e in rst if e['asset'] == asset]
-        for v in rst:
-            v['value'] = int(float(v['value']) * constant.COIN)
-
         if not rst:
             return 0
+        for v in rst:
+            v['value'] = int(v['value'])
         return rst[0]['value'] if asset is not None else rst
 
     def _get_tx_receipt(self, tx_id: str):
@@ -178,7 +183,7 @@ class Node:
 
             >>> from asimov import Node, constant
             >>> node = Node("http://seed.asimov.tech", "0xafd29358a5ba9e2f5aac5cd5013a6830a99e34a68c469c78ab5f4c6f1d8c2a46")
-            >>> tx = node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10, tx_fee_value=1)
+            >>> tx = node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10)
             # wait tx on chain
             >>> assert tx.check() is constant.SUCCESS
         """
@@ -198,9 +203,7 @@ class Node:
         """
 
         rst = self.call("getUtxoInPage", [address, asset, _from, count])['utxos']
-        for item in rst:
-            item['amount'] = int(item['amount'] * constant.COIN)
-        return rst
+        return [item for item in rst if item['spendable'] is True]
 
     def _get_utxo(self, address: str, asset=constant.ASCOIN, amount=1):
         """
@@ -320,91 +323,85 @@ class Node:
             caller_address = self.address
         return self.call("callReadOnlyFunction", [caller_address, contract_address, data, func_name, abi])
 
-    def _select_utxo(self, asset_value, asset_type, tx_fee_value, tx_fee_type,
-                     policy=constant.UtxoSelectPolicy.NORMAL) -> dict:
+    def _select_utxo(self, assets: dict) -> dict:
         """
         select UTXO according to given parameters
         """
 
         rst = dict()
-        rst[asset_type] = 0
-        rst[tx_fee_type] = 0
+        utxos = []
 
-        if policy == constant.UtxoSelectPolicy.NORMAL:
-            asset_value = max([asset_value, 1])
-            if tx_fee_value == 0:
-                utxos = self._get_utxo(self.address, asset_type, asset_value)
-            else:
-                if asset_type == tx_fee_type:
-                    utxos = self._get_utxo(self.address, asset_type, asset_value + tx_fee_value)
-                else:
-                    utxos = self._get_utxo(self.address, asset_type, asset_value)
-                    utxos.extend(self._get_utxo(self.address, tx_fee_type, tx_fee_value))
-
-        elif policy == constant.UtxoSelectPolicy.VOTE:
-            vote_value = asset_value
-            if vote_value == 0:
-                vote_value = self.balance(asset=asset_type)
-            if tx_fee_value == 0:
-                try:
-                    utxos = self._get_utxo(self.address, asset_type, vote_value)
-                except error.NotEnoughMoney as e:
-                    utxos = e.args[0]
-            else:
-                if tx_fee_value > self.balance(asset=tx_fee_type):
-                    raise error.NotEnoughMoney()
-
-                if asset_type == tx_fee_type:
-                    try:
-                        utxos = self._get_utxo(self.address, asset_type, vote_value + tx_fee_value)
-                    except error.NotEnoughMoney as e:
-                        utxos = e.args[0]
-                else:
-                    try:
-                        utxos = self._get_utxo(self.address, asset_type, vote_value)
-                    except error.NotEnoughMoney as e:
-                        utxos = e.args[0]
-                    utxos.extend(self._get_utxo(self.address, tx_fee_type, tx_fee_value))
-        else:
-            raise error.UnknownError(f"unknown utxo select policy: {policy}")
-
-        for utxo in utxos:
-            utxo['signed_key'] = self.account
-        rst[asset_type] = sum([utxo['amount'] for utxo in utxos if utxo['assets'] == asset_type])
-        rst[tx_fee_type] = sum([utxo['amount'] for utxo in utxos if utxo['assets'] == tx_fee_type])
+        for k, v in assets.items():
+            if v == 0:
+                continue
+            _utxos = self._get_utxo(self.address, k, v)
+            for _utxo in _utxos:
+                _utxo['signed_key'] = self.account
+            rst[k] = sum([_utxo['amount'] for _utxo in _utxos])
+            utxos.extend(_utxos)
         rst['utxos'] = utxos
+
         return rst
+
+    def _select_vote_utxo(self, vote_value: int, vote_asset_type: str, fees: dict) -> dict:
+        """select UTXO for vote transaction"""
+        assets = copy.copy(fees)
+        if vote_value == 0:
+            balance_of_vote_asset_type = self.balance(address=self.address, asset=vote_asset_type)
+            if fees.get(vote_asset_type, 0) > balance_of_vote_asset_type:
+                raise error.NotEnoughMoney(
+                    f"need {assets[vote_asset_type]}, but only have {balance_of_vote_asset_type} of {vote_asset_type}")
+            else:
+                assets[vote_asset_type] = balance_of_vote_asset_type
+        else:
+            assets[vote_asset_type] = assets.get(vote_asset_type, 0) + vote_value
+        return self._select_utxo(assets)
 
     def _build_transfer(
             self, address, asset_value, asset_type=constant.ASCOIN,
-            tx_fee_value=0, tx_fee_type=constant.ASCOIN
-    ) -> (list, list):
+            tx_fee_type=constant.ASCOIN, gas_price=constant.DEFAULT_GAS_PRICE
+    ) -> Transaction:
         """
         build a transaction
         """
+        def __build_outputs(_select_rst: dict, _fee_value: int, _fee_type: str) -> list:
+            needed_assets = dict_add({asset_type: asset_value}, {_fee_type: _fee_value})
+            _outputs = [{
+                "address": address,
+                "amount": asset_value,
+                "assets": asset_type
+            }]
+            # 找零 output
+            for _asset_type in _select_rst:
+                if _select_rst[_asset_type] > needed_assets[_asset_type]:
+                    _outputs.append({
+                        "address": self.address,
+                        "amount": _select_rst[_asset_type] - needed_assets[_asset_type],
+                        "assets": _asset_type
+                    })
+            return [item for item in _outputs if item['amount'] > 0]
 
-        select_rst = self._select_utxo(asset_value, asset_type, tx_fee_value, tx_fee_type)
-        outputs = [self.create_tx_output(address, asset_value, asset_type)]
-        if asset_type == tx_fee_type:
-            outputs.append(
-                self.create_tx_output(self.address, select_rst[asset_type] - asset_value - tx_fee_value, asset_type)
-            )
-        else:
-            outputs.append(self.create_tx_output(self.address, select_rst[asset_type] - asset_value, asset_type))
-            outputs.append(self.create_tx_output(self.address, select_rst[tx_fee_type] - tx_fee_value, tx_fee_type))
-        vin_assets = [utxo['assets'] for utxo in select_rst['utxos']]
-        outputs = [output for output in outputs if output['assets'] in vin_assets]
-        return select_rst['utxos'], outputs
+        tx_fee_value = 0
+        while True:
+            select_rst = self._select_utxo(dict_add({asset_type: asset_value}, {tx_fee_type: tx_fee_value}))
+            inputs = select_rst.pop('utxos')
+            outputs = __build_outputs(select_rst, tx_fee_value, tx_fee_type)
+            tx = Transaction(inputs, outputs)
+            gas = self.estimate_gas(tx.sign().to_hex(), inputs)
+            tx_fee_value = math.ceil(gas * gas_price)
+            if select_rst.get(tx_fee_type, 0) >= (asset_value if asset_type == tx_fee_type else 0) + tx_fee_value:
+                outputs = __build_outputs(select_rst, tx_fee_value, tx_fee_type)
+                break
+            tx_fee_value += math.ceil(bytes_per_input * gas_per_byte * gas_price)
+        return Transaction(inputs, outputs, gas_limit=gas)
 
-    def send(self, address, asset_value: int, asset_type=constant.ASCOIN,
-             tx_fee_value=0, tx_fee_type=constant.ASCOIN) -> Tx:
+    def send(self, address, asset_value: int, asset_type=constant.ASCOIN, tx_fee_type=constant.ASCOIN) -> Tx:
         """
         send a normal transaction on asimov chain and return the transaction object :class:`~asimov.data_type.Tx`
 
         :param address: target address
         :param asset_value: asset value to send
         :param asset_type: asset type to send
-        :param tx_fee_value: transaction fee value
         :param tx_fee_type: transaction fee type
         :return: the :class:`~asimov.data_type.Tx` object
 
@@ -412,19 +409,18 @@ class Node:
 
             >>> from asimov import Node, constant
             >>> node = Node("http://seed.asimov.tech", "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3")
-            >>> node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10, asset_type=constant.ASCOIN, tx_fee_value=1, tx_fee_type=constant.ASCOIN)
+            >>> node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10, asset_type=constant.ASCOIN, tx_fee_type=constant.ASCOIN)
             [id: 91c4645bcf3680c699a591632cd8769abe2973fd2de70081a6752d9781f2801b]
         """
         if asset_value < 1:
-            raise error.InvalidParams(f"value should ve larger than 1, got {asset_value}")
-        tx = Transaction(*self._build_transfer(address, asset_value, asset_type, tx_fee_value, tx_fee_type))
-        return Tx(node=self, _id=self._send_raw_trx(tx.sign().to_hex()))
+            raise error.InvalidParams(f"value should be larger than 1, got {asset_value}")
+        return Tx(self, self._build_transfer(address, asset_value, asset_type, tx_fee_type)).broadcast()
 
     def call_write_function(
             self, func_name: str = None, params: tuple = None, abi=None, contract_address: str = constant.NullAddress,
             contract_tx_data=None, call_type=constant.TxType.CALL, asset_value=0, asset_type=constant.ASCOIN,
-            tx_fee_value=0, tx_fee_type=constant.ASCOIN
-    ):
+            tx_fee_type=constant.ASCOIN, gas_price=constant.DEFAULT_GAS_PRICE, corrected_gas=50000
+    ) -> Tx:
         """
         send a transaction to execute a method in the contract
 
@@ -436,122 +432,81 @@ class Node:
         :param call_type: call type
         :param asset_value: asset value to send
         :param asset_type: asset type to send
-        :param tx_fee_value: transaction fee value
         :param tx_fee_type: transaction fee type
-        :return: the :class:`~asimov.node.Node` object
+        :param gas_price: gas price
+        :param corrected_gas: adjusted gas value
+        :return: the :class:`~asimov.data_type.Tx` object
         """
-        select_policy = constant.UtxoSelectPolicy.VOTE if call_type == constant.TxType.VOTE \
-            else constant.UtxoSelectPolicy.NORMAL
-        select_rst = self._select_utxo(asset_value, asset_type, tx_fee_value, tx_fee_type, select_policy)
-
-        if call_type == constant.TxType.VOTE:
-            vote_value = asset_value
-            asset_value = 0
-
-        if contract_tx_data is None:
+        if call_type in (constant.TxType.TEMPLATE, constant.TxType.CREATE):
+            assert contract_tx_data is not None
+        if call_type in (constant.TxType.CALL, constant.TxType.VOTE) and contract_tx_data is None:
             contract_tx_data = remove_0x_prefix(
                 encode_transaction_data(fn_identifier=func_name, contract_abi=abi, args=params)
             )
-        outputs = [self.create_contract_tx_output(
+        contract_output = self.create_contract_tx_output(
             address=contract_address,
             amount=asset_value,
             data=contract_tx_data,
             assets=asset_type,
             contract_type=call_type
-        )]
+        )
+
+        # estimate gas
+        tx_fee_value = 0
+        while True:
+            if call_type == constant.TxType.VOTE:
+                select_rst = self._select_vote_utxo(0, asset_type, {tx_fee_type: tx_fee_value})
+            else:
+                need_assets = dict_add({asset_type: asset_value}, {tx_fee_type: tx_fee_value})
+                need_assets[tx_fee_type] = max([need_assets[tx_fee_type], 1])
+                select_rst = self._select_utxo(need_assets)
+            inputs = select_rst['utxos']
+            outputs = [contract_output]
+            if asset_type == tx_fee_type:
+                outputs.append(self.create_tx_output(
+                    self.address,
+                    select_rst.get(asset_type, 0) - asset_value - tx_fee_value,
+                    asset_type
+                ))
+            else:
+                outputs.extend([
+                    self.create_tx_output(self.address, select_rst.get(asset_type, 0) - asset_value, asset_type),
+                    self.create_tx_output(self.address, select_rst.get(tx_fee_type, 0) - tx_fee_value, tx_fee_type)
+                ])
+            valid_outputs = [item for item in outputs if not (len(item.get("data", "")) == 0 and item['amount'] <= 0)]
+            tx = Transaction(inputs, valid_outputs)
+            gas = self.estimate_gas(tx.sign().to_hex(), inputs, corrected_gas)
+            tx_fee_value = math.ceil(gas * gas_price)
+            min_value = tx_fee_value
+            if asset_type == tx_fee_type:
+                min_value += asset_value
+            if select_rst.get(tx_fee_type, 0) >= min_value:
+                break
+            tx_fee_value += math.ceil(bytes_per_input * gas_per_byte * gas_price)
+
+        outputs = [contract_output]
         if asset_type == tx_fee_type:
             outputs.append(
-                self.create_tx_output(self.address, select_rst[asset_type] - asset_value - tx_fee_value, asset_type)
+                self.create_tx_output(self.address, select_rst.get(asset_type, 0) - asset_value - tx_fee_value, asset_type)
             )
         else:
-            outputs.append(self.create_tx_output(self.address, select_rst[asset_type] - asset_value, asset_type))
-            outputs.append(self.create_tx_output(self.address, select_rst[tx_fee_type] - tx_fee_value, tx_fee_type))
-        vin_assets = [utxo['assets'] for utxo in select_rst['utxos']]
-        outputs = [output for output in outputs if output['assets'] in vin_assets]
+            outputs.extend([
+                self.create_tx_output(self.address, select_rst.get(asset_type, 0) - asset_value, asset_type),
+                self.create_tx_output(self.address, select_rst.get(tx_fee_type, 0) - tx_fee_value, tx_fee_type)
+            ])
+        valid_outputs = [item for item in outputs if not (len(item.get("data", "")) == 0 and item['amount'] <= 0)]
+        return Tx(self, Transaction(select_rst['utxos'], valid_outputs, gas_limit=gas), is_contract_tx=True)
 
-        self.build_tx(select_rst['utxos'], outputs)
-        if call_type == constant.TxType.CALL:
-            gas = self.estimate_call_contract_gas(
-                SmartContract(abi=abi, address=contract_address), func_name, params, asset_value, asset_type
-            )
-        elif call_type == constant.TxType.VOTE:
-            gas = self.estimate_vote_gas(
-                SmartContract(abi=abi, address=contract_address), func_name, vote_value, params, asset_type
-            )
-        elif call_type == constant.TxType.TEMPLATE:
-            gas = self.estimate_create_template_gas(contract_tx_data, asset_value, asset_type)
-        elif call_type == constant.TxType.CREATE:
-            gas = self.estimate_deploy_contract_gas(contract_tx_data, asset_value, asset_type)
-        else:
-            raise error.InvalidTxType(call_type)
-        self.gas_limit(int(gas * 1))
-        return self
-
-    def estimate_call_contract_gas(self, contract: SmartContract, func_name, params=None,
-                                   asset_value=0, asset_type=constant.ASCOIN) -> int:
+    def estimate_gas(self, tx_hex: str, inputs: list, corrected_value=50000):
         """
-        estimate contract execution gas cost
-
-        :param contract: the :class:`~asimov.data_type.SmartContract` object
-        :param func_name: function name
-        :param params: call parameters
-        :param asset_value: asset value to send
-        :param asset_type: asset type to send
-        :return: estimated gas cost
+        estimate transaction execution gas cost
+        :param tx_hex: transaction in hex format
+        :param inputs: UTXO used in transaction
+        :param corrected_value: corrected gas value
+        :return:
         """
-        data = remove_0x_prefix(encode_transaction_data(
-            fn_identifier=func_name, contract_abi=contract.abi, args=params))
-        return self.call(
-            "estimateGas",
-            [self.address, contract.address, asset_value, asset_type, data, constant.TxType.CALL, 0]
-        )
-
-    def estimate_deploy_contract_gas(self, data, asset_value=0, asset_type=constant.ASCOIN) -> int:
-        """
-        estimate contract deployment gas cost
-
-        :param data: the data of transaction
-        :param asset_value: asset value to send
-        :param asset_type: asset type to send
-        :return: estimated gas cost
-        """
-        return self.call(
-            "estimateGas",
-            [self.address, constant.NullAddress, asset_value, asset_type, data, constant.TxType.CREATE, 0]
-        )
-
-    def estimate_create_template_gas(self, data, asset_value=0, asset_type=constant.ASCOIN) -> int:
-        """
-        estimate template creation gas cost
-
-        :param data: the data of transaction
-        :param asset_value: asset value to send
-        :param asset_type: asset type to send
-        :return: estimated gas cost
-        """
-        return self.call(
-            "estimateGas",
-            [self.address, constant.NullAddress, asset_value, asset_type, data, constant.TxType.TEMPLATE, 0]
-        )
-
-    def estimate_vote_gas(self, contract: SmartContract, func_name, vote_value,
-                          params=None, asset_type=constant.ASCOIN) -> int:
-        """
-        estimate vote gas cost
-
-        :param contract: the :class:`~asimov.data_type.SmartContract` object
-        :param func_name: function name
-        :param vote_value: vote value
-        :param params: vote function parameters
-        :param asset_type: asset type to send
-        :return: estimated gas cost
-        """
-        data = remove_0x_prefix(encode_transaction_data(
-            fn_identifier=func_name, contract_abi=contract.abi, args=params))
-        return self.call(
-            "estimateGas",
-            [self.address, contract.address, 0, asset_type, data, constant.TxType.VOTE, vote_value]
-        )
+        rst = self.call("runTransaction", [tx_hex, inputs])
+        return rst['gasUsed'] + corrected_value
 
     @staticmethod
     def build_data_of_deploy_contract(contract_template: ContractTemplate, params: list) -> str:
@@ -601,34 +556,3 @@ class Node:
             abi_bytes.hex(),
             source_bytes.hex()
         ])
-
-    def build_tx(self, inputs: list, outputs: list):
-        """
-        build transaction with inputs and outputs
-
-        :param inputs: input list
-        :param outputs: output list
-        :return: the :class:`~asimov.node.Node` object
-        """
-        is_contract_tx = outputs[0].get("contractType") is not None
-        self.tx = Tx(self, vin=inputs, vout=outputs, is_contract_tx=is_contract_tx)
-        return self
-
-    def gas_limit(self, v: int):
-        """
-        set gas limit for transaction, if not set, the estimated gas cost will be used
-
-        :param v: gas limit
-        """
-        self.tx.gas_limit = v
-        return self.tx
-
-    def broadcast(self) -> Tx:
-        """
-        broadcast transaction
-
-        :return: the :class:`~asimov.data_type.Tx` object
-        """
-        tx = self.tx
-        tx.id = self._send_raw_trx(Transaction(self.tx.vin, self.tx.vout, gas_limit=self.tx.gas_limit).sign().to_hex())
-        return tx

@@ -35,9 +35,9 @@ class Contract:
 
         if address is None:
             tx_data = node.build_data_of_deploy_contract(contract_template, args if args else [])
-            node.call_write_function(contract_tx_data=tx_data, call_type=TxType.CREATE)
-            address = node._calc_contract_address(node.tx.vin, node.tx.vout)
-            assert node.broadcast().check() is SUCCESS
+            tx = node.call_write_function(contract_tx_data=tx_data, call_type=TxType.CREATE)
+            address = node._calc_contract_address(tx.transaction.vin, tx.transaction.vout)
+            assert tx.broadcast().check() is SUCCESS
 
         self.template_name = contract_template.template_name
         self.address = address
@@ -74,8 +74,7 @@ class Contract:
             abi=self.abi_json_str
         )
 
-    def execute(self, func_name, args=None, asset_value=0, asset_type=ASCOIN,
-                tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
+    def execute(self, func_name, args=None, asset_value=0, asset_type=ASCOIN, tx_fee_type=ASCOIN) -> Tx:
         """
         send a transaction to execute a function in the contract and return the transaction object :class:`~asimov.data_type.Tx`.
         Note the returned :class:`~asimov.data_type.Tx` object is in pending status.
@@ -85,7 +84,6 @@ class Contract:
         :param args: function arguments
         :param asset_value: the asset value to be send
         :param asset_type: the asset type to be send
-        :param tx_fee_value: the transaction fee value
         :param tx_fee_type: the transaction fee type
         :return: the :class:`~asimov.data_type.Tx` object
 
@@ -104,11 +102,10 @@ class Contract:
             abi=self.abi,
             asset_value=asset_value,
             asset_type=asset_type,
-            tx_fee_value=tx_fee_value,
-            tx_fee_type=tx_fee_type
+            tx_fee_type=tx_fee_type,
         ).broadcast()
 
-    def vote(self, func_name, args=None, vote_value=0, asset_type=ASCOIN, tx_fee_value=0, tx_fee_type=ASCOIN) -> Tx:
+    def vote(self, func_name, args=None, asset_value=0, asset_type=ASCOIN, tx_fee_type=ASCOIN) -> Tx:
         """
         send a transaction to vote on a contract and return the transaction object :class:`~asimov.data_type.Tx`
         Note the returned :class:`~asimov.data_type.Tx` object is in pending status.
@@ -116,9 +113,8 @@ class Contract:
 
         :param func_name: function name
         :param args: function arguments
-        :param vote_value: the value you wants to vote
+        :param asset_value: the asset value to be send
         :param asset_type: the asset type to be send
-        :param tx_fee_value: the transaction fee value
         :param tx_fee_type: the transaction fee type
         :return: the :class:`~asimov.data_type.Tx` object
 
@@ -135,8 +131,7 @@ class Contract:
             func_name=func_name,
             abi=self.abi,
             asset_type=asset_type,
-            asset_value=vote_value,
-            tx_fee_value=tx_fee_value,
+            asset_value=asset_value,
             call_type=TxType.VOTE,
             tx_fee_type=tx_fee_type
         ).broadcast()

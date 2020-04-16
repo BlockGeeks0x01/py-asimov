@@ -170,3 +170,19 @@ During development, you might like to have tests run on every file save.
 make test
 ```
 
+### Release setup
+
+To release a new version:
+
+```sh
+make release bump=$$VERSION_PART_TO_BUMP$$
+```
+
+#### How to bumpversion
+
+The version format for this repo is `{major}.{minor}.{patch}` for stable
+
+To issue the next version in line, specify which part to bump,
+like `make release bump=minor` or `make release bump=patch`. This is typically done from the
+master branch. To include changes made with each release, update "docs/releases.rst" with the changes, 
+and apply commit directly to master before release.

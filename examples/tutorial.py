@@ -67,7 +67,7 @@ if __name__ == '__main__':
     assert node.balance(asset=asset_type) == 1 * constant.COIN
 
     assert contract.read("voteValues", [88]) == 0
-    tx = contract.vote("vote", [88], 1, asset_type)
+    tx = contract.vote("vote", [88], asset_type=asset_type)
     assert tx.check() is constant.SUCCESS
     # check balance
     assert node.balance(asset=asset_type) == 1 * constant.COIN
