@@ -1,5 +1,27 @@
+import sys
 import eth_utils
-import eth_abi.decoding
+
+
+def uncache(exclude: [str]):
+    pkgs = []
+    to_uncache = []
+    mod: str
+    for mod in exclude:
+        pkgs.append(mod.split('.', 1)[0])
+    pkgs = list(set(pkgs))
+
+    for mod in sys.modules:
+        if mod in exclude:
+            continue
+        if mod in pkgs:
+            to_uncache.append(mod)
+            continue
+        for pkg in pkgs:
+            if mod.startswith(pkg + '.'):
+                to_uncache.append(mod)
+                break
+    for mod in to_uncache:
+        del sys.modules[mod]
 
 
 def _is_hex_address(value) -> bool:
@@ -19,9 +41,11 @@ def _is_checksum_address(value) -> bool:
     return True
 
 
-eth_utils.is_checksum_address = _is_checksum_address
-eth_utils.is_hex_address = _is_hex_address
-eth_utils.address.is_checksum_address = _is_checksum_address
-eth_utils.address.is_hex_address = _is_hex_address
-eth_abi.decoding.AddressDecoder.value_bit_size = 21 * 8
+from eth_utils import address
+address.is_checksum_address = _is_checksum_address
+address.is_hex_address = _is_hex_address
+uncache(["eth_utils.address"])
+
+from eth_abi.decoding import AddressDecoder
+AddressDecoder.value_bit_size = 21 * 8
 
