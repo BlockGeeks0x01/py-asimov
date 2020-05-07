@@ -22,4 +22,8 @@ contract Refund {
     function withdraw(uint value) public {
         msg.sender.transfer(value * 1e8, 0x000000000000000000000000);
     }
+
+    function withdraw() public {
+        msg.sender.transfer(1 * 1e8, 0x000000000000000000000000);
+    }
 }

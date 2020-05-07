@@ -151,64 +151,6 @@ class Transaction:
             n += _output.serialize_size()
         return n
 
-    @staticmethod
-    def parse_sign_hex(sign_hex):
-        """parse signed tx"""
-        parse = list()
-        parse.append(f"protocol version: {sign_hex[:8]}")
-        parse.append(f"vin amount: {sign_hex[8:10]}")
-        vin_num = Web3.toInt(hexstr=sign_hex[8:10])
-        cursor = 10
-        for n in range(vin_num):
-            parse.append(f"the {n}st vin")
-            parse.append(f"vin hash: {sign_hex[cursor: cursor+64]}")
-            parse.append(f"vin index: {sign_hex[cursor+64:cursor+64+8]}")
-            cursor += 72
-            parse.append(f"total length of unlock script: {sign_hex[cursor: cursor+2]}")
-            cursor += 2
-            parse.append(f"length of unlock script: {sign_hex[cursor: cursor+2]}")
-            redeem_script_length = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
-            cursor += 2
-            parse.append(f"unlock script: {sign_hex[cursor: cursor+(redeem_script_length-1)*2]}")
-            cursor += (redeem_script_length-1)*2
-            parse.append(f"sign type: {sign_hex[cursor: cursor+2]}")
-            cursor += 2
-            parse.append(f"length of public key: {sign_hex[cursor: cursor+2]}")
-            public_key_length = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
-            cursor += 2
-            parse.append(f"public key of unlock script: {sign_hex[cursor: cursor+public_key_length*2]}")
-            cursor += public_key_length * 2
-            parse.append(f"sequence: {sign_hex[cursor: cursor+8]}")
-            cursor += 8
-        parse.append(f"vout amount: {sign_hex[cursor: cursor+2]}")
-        vout_num = Web3.toInt(hexstr=sign_hex[cursor: cursor+2])
-        cursor += 2
-        for n in range(vout_num):
-            parse.append(f"the {n} st vout")
-            parse.append(f"amount: {sign_hex[cursor: cursor + 16]}")
-            cursor += 16
-            parse.append(f"length of pkscript: {sign_hex[cursor: cursor + 2]}")
-            pkscript_length = Web3.toInt(hexstr=sign_hex[cursor: cursor + 2])
-            cursor += 2
-            parse.append(f"pkscript: {sign_hex[cursor: cursor + pkscript_length * 2]}")
-            cursor += pkscript_length * 2
-            parse.append(f"length of assets: {sign_hex[cursor: cursor+ 2]}")
-            assets_length = Web3.toInt(hexstr=sign_hex[cursor: cursor + 2])
-            cursor += 2
-            parse.append(f"pkscript: {sign_hex[cursor: cursor + assets_length * 2]}")
-            cursor += assets_length * 2
-            data_length = VarIntSerializer.deserialize(Web3.toBytes(hexstr=sign_hex[cursor:]))
-            data_length_self_length = len(VarIntSerializer.serialize(data_length))
-            parse.append(f"length of data: {sign_hex[cursor: cursor+data_length_self_length * 2]}({data_length})")
-            cursor += data_length_self_length * 2
-            parse.append(f"data: {sign_hex[cursor: cursor + data_length * 2]}")
-            cursor += data_length * 2
-        parse.append(f"gas limit: {sign_hex[cursor: cursor+8]}")
-        parse.append(f"lock time: {sign_hex[cursor+8: cursor+16]}")
-
-        for msg in parse:
-            print(msg)
-
 
 class AsimovScript:
     @classmethod

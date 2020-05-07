@@ -1,6 +1,6 @@
 from bitcointx.core.script import CScriptOp
 
-'''Asim is the system asset of Asimov blockchain'''
+# Asim is the system asset of Asimov blockchain
 ASCOIN = "000000000000000000000000"
 
 SUCCESS = 1
@@ -8,11 +8,9 @@ FAILED = 0
 
 RPC_PREFIX = 'asimov_'
 
-'''
-Xin is the smallest asset unit in Asimov, which is the same as satoshi in Bitcoin
 
-Coin = 100,000,000 * Xin
-'''
+# Xin is the smallest asset unit in Asimov, which is the same as satoshi in Bitcoin
+# Coin = 100,000,000 Xin
 XIN = 1
 COIN = 100_000_000 * XIN
 
@@ -25,10 +23,10 @@ class TxType:
     """
     There are different call types when interacting with contract in a transaction
 
-    *. CREATE deploy a new contract
-    *. CALL call a contract function
-    *. TEMPLATE submit a new template to template warehouse
-    *. VOTE vote to a contact function
+    #. CREATE deploy a new contract
+    #. CALL call a contract function
+    #. TEMPLATE submit a new template to template warehouse
+    #. VOTE vote to a contact function
     """
     CREATE = "create"
     CALL = "call"
@@ -52,8 +50,8 @@ class AddressType:
     """
     address types
 
-    *. 0x66 normal account
-    *. 0x63 contract
+    #. 0x66 normal account
+    #. 0x63 contract
     """
     PubKeyHash = 0x66
     ContractHash = 0x63

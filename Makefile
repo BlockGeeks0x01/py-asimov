@@ -7,6 +7,7 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "dist - package"
 	@echo "release - package and upload a release"
+	@echo "docs - build and open documents"
 
 clean: clean-build clean-pyc
 
@@ -24,7 +25,7 @@ test:
 	pytest tests
 
 build-docs:
-	sphinx-apidoc -o docs/ . setup.py "*conftest*"
+	sphinx-apidoc -o docs/ asimov
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 
@@ -45,3 +46,6 @@ release: clean
 dist: clean
 	python setup.py sdist bdist_wheel
 	ls -l dist
+
+code-cov:
+	pytest --cov=asimov --cov-report=html tests/

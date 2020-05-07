@@ -10,6 +10,8 @@ with open("README.md", "r") as f:
 extras_require = {
     'test': [
         "pytest>=5.2.2,<6",
+        "pytest-cov>=2.8.1,<3",
+        "tox>=3.15.0,<4",
     ],
     'lint': [],
     'doc': [
@@ -21,7 +23,7 @@ extras_require = {
         "ipython",
         "wheel",
         "twine",
-        "bumpversion>=0.5.3,<1"
+        "bumpversion>=0.5.3,<1",
     ]
 }
 
@@ -45,13 +47,12 @@ setup(
     url="https://gitlab.asimov.work/asimov/asimov-python-sdk",
     install_requires=[
         "fastecdsa>=1.7.4,<2",
-        "eth-utils>=1.8.0,<2",
         "web3>=4.9.0,<5",
         "python-bitcointx>=1.0.1,<2",
         "requests>=2.22.0,<3",
         "py-solc>=3.2.0,<4",
     ],
-    python_requires=">=3.7, <4",
+    python_requires=">=3.6, <4",
     extras_require=extras_require,
     zip_safe=False,
     py_modules=['asimov'],
@@ -64,5 +65,6 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.6',
     ],
 )

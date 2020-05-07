@@ -39,17 +39,22 @@ class AsimovSolc:
 
             >>> from asimov import AsimovSolc
             >>> AsimovSolc.compile("/path/to/my/sources/example.sol")
-            {'Example': {'abi': [{'inputs': [],
-                       'payable': False,
-                       'stateMutability': 'nonpayable',
-                       'type': 'constructor'}],
-              'address': None,
-              'bytecode': '6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820bf199053a6eea79c7732c9211fc200781b170db435d118cbd86d2ac117e2fa360029',
-              'source': 'pragma solidity ^0.4.25;\n'
-                        '\n'
-                        'contract Example {\n'
-                        '    constructor() public {}\n'
-                        '}\n'}}
+            {'Example': {
+                'abi': [{
+                    'inputs': [],
+                    'payable': False,
+                    'stateMutability': 'nonpayable',
+                    'type': 'constructor'
+                }],
+                'address': None,
+                'bytecode': '6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820bf199053a6eea79c7732c9211fc200781b170db435d118cbd86d2ac117e2fa360029',
+                'source': 'pragma solidity ^0.4.25;\n'
+                          '\n'
+                          'contract Example {\n'
+                          '    constructor() public {}\n'
+                          '}\n'
+                }
+            }
         """
         with open(source_file) as f:
             source_code = f.read()

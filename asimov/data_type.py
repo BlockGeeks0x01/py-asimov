@@ -104,9 +104,9 @@ class Asset:
 
     Asimov asset consists of 3 parts
 
-    *. asset_type, 4 bytes long, each bit contains an asset property. For now, the first bit is used to determine whether an asset is divisible and the second bit is used to determine whether the asset is restricted.
-    *. org_id, 4 bytes long organization id, system wide unique id assigned to organization when registering to asimov platform.
-    *. asset_index, 4 bytes long asset index in organization, the assigning rule is determined by the organization itself.
+    #. asset_type, 4 bytes long, each bit contains an asset property. For now, the first bit is used to determine whether an asset is divisible and the second bit is used to determine whether the asset is restricted.
+    #. org_id, 4 bytes long organization id, system wide unique id assigned to organization when registering to asimov platform.
+    #. asset_index, 4 bytes long asset index in organization, the assigning rule is determined by the organization itself.
     """
 
     @staticmethod

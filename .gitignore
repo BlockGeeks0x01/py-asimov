@@ -1,13 +1,19 @@
 *.egg-info
-.pytest_cache
+.DS_Store
 build/
 dist/
 *.pyc
 *.pyo
 *~
+.tox
 
 
 # Sphinx
 docs/_build
 docs/modules.rst
 docs/*.internal.rst
+
+# pytest
+.pytest_cache
+htmlcov
+.coverage

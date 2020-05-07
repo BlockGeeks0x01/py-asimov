@@ -1,49 +1,94 @@
-py-asimov
+asimov package
 ==============
 
-Account
+Submodules
+----------
+
+asimov.account module
 ---------------------
 
 .. automodule:: asimov.account
     :members:
+    :undoc-members:
+    :show-inheritance:
 
-Solc
--------------------
+asimov.constant module
+----------------------
 
-.. automodule:: asimov.solc
+.. automodule:: asimov.constant
     :members:
+    :undoc-members:
+    :show-inheritance:
 
-Contract
+asimov.contract module
 ----------------------
 
 .. automodule:: asimov.contract
     :members:
     :undoc-members:
+    :show-inheritance:
 
-Data\_type
+asimov.data\_type module
 ------------------------
 
 .. automodule:: asimov.data_type
     :members:
     :undoc-members:
+    :show-inheritance:
 
-Node
+asimov.error module
+-------------------
+
+.. automodule:: asimov.error
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+asimov.evm\_log module
+----------------------
+
+.. automodule:: asimov.evm_log
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+asimov.node module
 ------------------
 
 .. automodule:: asimov.node
     :members:
     :undoc-members:
+    :show-inheritance:
 
-Template
+asimov.solc module
+------------------
+
+.. automodule:: asimov.solc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+asimov.template module
 ----------------------
 
 .. automodule:: asimov.template
     :members:
     :undoc-members:
+    :show-inheritance:
 
-Evm\_log
----------------------
+asimov.transactions module
+--------------------------
 
-.. automodule:: asimov.evm_log
+.. automodule:: asimov.transactions
     :members:
     :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: asimov
+    :members:
+    :undoc-members:
+    :show-inheritance:
