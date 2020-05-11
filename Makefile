@@ -37,7 +37,7 @@ linux-docs: build-docs
 
 release: clean
 	git config commit.gpgSign true
-	bumpversion $(bump)
+	bump2version $(bump)
 	git push origin && git push origin --tags
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
@@ -49,3 +49,4 @@ dist: clean
 
 code-cov:
 	pytest --cov=asimov --cov-report=html tests/
+	open htmlcov/index.html

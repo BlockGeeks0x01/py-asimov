@@ -23,7 +23,7 @@ extras_require = {
         "ipython",
         "wheel",
         "twine",
-        "bumpversion>=0.5.3,<1",
+        "bump2version>=1.0.0,<2",
     ]
 }
 

@@ -144,4 +144,5 @@ class Contract:
         :return: the :class:`~asimov.data_type.EvmLogs` object
         """
         receipt = self.node._get_tx_receipt(tx_id)
+        print(receipt)
         return EvmLogParser.parse(receipt['logs'], self.abi)

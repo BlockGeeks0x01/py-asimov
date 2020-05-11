@@ -1,9 +1,11 @@
+import pytest
 from web3 import Web3
 from bitcointx.core import b2lx
 from asimov import (
     Transaction,
     AccountFactory
 )
+from asimov.transactions import VarIntSerializeSize
 
 
 def test_encoding():
@@ -123,3 +125,14 @@ def test_create_template_trx():
     tx = Transaction(inputs, outputs)
     sign_hex = tx.sign().to_hex()
     assert sign_hex == correct_sign_hex
+
+
+@pytest.mark.parametrize("value,expected", [
+    (0xfc, 1),
+    (0xfd, 3),
+    (1 << 16 - 1, 3),
+    (1 << 32 - 1, 5),
+    (1 << 32, 9)
+])
+def test_var_int_serialize_size(value, expected):
+    assert VarIntSerializeSize(value) == expected

@@ -21,4 +21,6 @@ def complied_contract() -> SmartContract:
 
 @pytest.fixture(scope="session")
 def node() -> Node:
-    return Node(private_key=AccountFactory.new().private_key)
+    n = Node(private_key=AccountFactory.new().private_key)
+    n.set_rpc_server("xxx")
+    return n
