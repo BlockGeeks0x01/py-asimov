@@ -68,4 +68,3 @@ class ContractFunType:
 class UtxoSelectPolicy:
     NORMAL = 'normal'
     VOTE = 'vote'
-

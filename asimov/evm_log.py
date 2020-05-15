@@ -22,7 +22,7 @@ class EvmLogParser:
         """
         if isinstance(abi, str):
             abi = json.loads(abi)
-        if type(raw_log) is dict:
+        if isinstance(raw_log, dict):
             raw_logs = [raw_log]
         else:
             raw_logs = raw_log
@@ -40,10 +40,12 @@ class EvmLogParser:
             indexed_names = [e['name'] for e in event_abi['inputs'] if e['indexed']]
             types = [e['type'] for e in event_abi['inputs'] if not e['indexed']]
             names = [e['name'] for e in event_abi['inputs'] if not e['indexed']]
-            indexed_values = [eth_abi.decode_single(t, Web3.toBytes(hexstr=v)) for t, v in zip(indexed_types, log.topics[1:])]
+            indexed_values = [
+                eth_abi.decode_single(t, Web3.toBytes(hexstr=v)) for t, v in zip(indexed_types, log.topics[1:])]
             values = list(eth_abi.decode_abi(types, Web3.toBytes(hexstr=log.data)))
             logs.append({
                 "name": event_abi['name'],
+                # pylint: disable=unnecessary-comprehension
                 "args": {n: v for n, v in zip(names + indexed_names, values + indexed_values)}
             })
         return logs

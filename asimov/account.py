@@ -81,7 +81,8 @@ class AccountFactory:
         .. code-block:: python
 
             >>> from asimov import AccountFactory
-            >>> account = AccountFactory.private2account("bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> account = AccountFactory.private2account(
+                "bba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
             >>> account.address
             '0x66c17b951f0c85b860c9f7f0d811c77ea78f2d2e3a'
             >>> account.private_key
@@ -106,6 +107,7 @@ class AccountFactory:
 
     @classmethod
     def private2public(cls, private_key: str) -> bytes:
+        # pylint: disable=line-too-long
         """
         generate public key from private key
 
@@ -132,7 +134,8 @@ class AccountFactory:
         .. code-block: python
 
             >>> from asimov import AccountFactory
-            >>> AccountFactory.private2compressed_public("0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
+            >>> AccountFactory.private2compressed_public(
+                "0xbba692e559fda550d0157669b101bafddb23e7f57aeeb5cef5494e7a41a1f056")
             >>> b'023a68576342553357f042c6ede12bd3ed01cb61ad39848908883cab93f66c7601'
         """
         key_hex = cls.__private2public(private_key)

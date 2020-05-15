@@ -16,12 +16,12 @@ from .account import Address
 DEFAULT_SEQUENCE = 0xffffffff
 
 
-def VarIntSerializeSize(val: int) -> int:
+def var_int_serialize_size(val: int) -> int:
     if val < 0xfd:
         return 1
-    elif val <= (1 << 16 - 1):
+    if val <= (1 << 16 - 1):
         return 3
-    elif val <= (1 << 32 - 1):
+    if val <= (1 << 32 - 1):
         return 5
     return 9
 
@@ -31,7 +31,7 @@ class TxInput:
         self.prev_tx_id = vin['txid']
         self.vout = vin['vout']
         self.sequence = DEFAULT_SEQUENCE
-        self.scriptPubKey = vin['scriptPubKey']
+        self.script_pub_key = vin['scriptPubKey']
         self.sig_script = None
         self.signed_key: Account = vin.get('signed_key')
 
@@ -51,7 +51,7 @@ class TxInput:
         # serialized varint size for the length of SignatureScript +
         # SignatureScript bytes
         length = len(self.sig_script) / 2 if self.sig_script else 0
-        return 40 + length + VarIntSerializeSize(length)
+        return 40 + length + var_int_serialize_size(length)
 
 
 class TxOutput:
@@ -104,12 +104,13 @@ class TxOutput:
         # Data bytes.
         pk_script_length = len(self.pk_script) / 2 if self.pk_script else 0
         data_length = len(self.data) / 2 if self.data else 0
-        return 20 + VarIntSerializeSize(pk_script_length) + pk_script_length + VarIntSerializeSize(data_length) + data_length
+        return 20 + var_int_serialize_size(pk_script_length) + pk_script_length + \
+               var_int_serialize_size(data_length) + data_length
 
 
 class Transaction:
     def __init__(self, vin=(), vout=(), nLockTime=0, nVersion=1, gas_limit=0):
-        if not (0 <= nLockTime <= 0xffffffff):
+        if not 0 <= nLockTime <= 0xffffffff:
             raise ValueError('CTransaction: nLockTime must be in range 0x0 to 0xffffffff; got %x' % nLockTime)
         self.vin = vin
         self.vout = vout
@@ -138,30 +139,30 @@ class Transaction:
     def sign(self, sig_type=script.SIGHASH_ALL):
         for idx, _input in enumerate(self.inputs):
             assert _input.signed_key is not None
-            _input.sig_script = AsimovScript.sign(self, _input.signed_key, idx, _input.scriptPubKey, sig_type).hex()
+            _input.sig_script = AsimovScript.sign(self, _input.signed_key, idx, _input.script_pub_key, sig_type).hex()
         return self
 
     def serialize_size(self) -> int:
         # Version 4 bytes + LockTime 4 bytes + TxContract 4 bytes + Serialized varint size for the
         # number of transaction inputs and outputs.
-        n = 12 + VarIntSerializeSize(len(self.inputs)) + VarIntSerializeSize(len(self.outputs))
+        length = 12 + var_int_serialize_size(len(self.inputs)) + var_int_serialize_size(len(self.outputs))
         for _input in self.inputs:
-            n += _input.serialize_size()
+            length += _input.serialize_size()
         for _output in self.outputs:
-            n += _output.serialize_size()
-        return n
+            length += _output.serialize_size()
+        return length
 
 
 class AsimovScript:
     @classmethod
-    def SignatureHash(cls, tx: Transaction, in_idx, sub_script, hash_type=script.SIGHASH_ALL) -> bytes:
+    def signature_hash(cls, tx: Transaction, in_idx, sub_script, hash_type=script.SIGHASH_ALL) -> bytes:
         tx = deepcopy(tx)
         for txin in tx.inputs:
             txin.sig_script = b''
         tx.inputs[in_idx].sig_script = sub_script
-        s = Web3.toBytes(hexstr=tx.to_hex())
-        s += struct.pack(b"<i", hash_type)
-        return bytes(Hash(s))
+        byte_value = Web3.toBytes(hexstr=tx.to_hex())
+        byte_value += struct.pack(b"<i", hash_type)
+        return bytes(Hash(byte_value))
 
     @classmethod
     def _sign(cls, account: Account, hashbuf, hash_type) -> bytes:
@@ -179,6 +180,6 @@ class AsimovScript:
 
     @classmethod
     def sign(cls, tx: Transaction, key_pair: Account, in_idx, sub_script, hash_type=script.SIGHASH_ALL) -> bytes:
-        hashbuf = cls.SignatureHash(tx, in_idx, sub_script, hash_type)
+        hashbuf = cls.signature_hash(tx, in_idx, sub_script, hash_type)
         sign_hash = cls._sign(key_pair, hashbuf, hash_type)
         return sign_hash

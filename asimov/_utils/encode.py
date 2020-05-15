@@ -12,12 +12,12 @@ encode_transaction_data = functools.partial(__encode_transaction_data, None)
 
 
 class AsimovJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Account):
-            return {"private_key": obj.private_key, "public_key": obj.public_key, "address": obj.address}
-        elif isinstance(obj, bytes):
-            return obj.decode('utf-8')
-        return super().default(obj)
+    def default(self, o):
+        if isinstance(o, Account):
+            return {"private_key": o.private_key, "public_key": o.public_key, "address": o.address}
+        if isinstance(o, bytes):
+            return o.decode('utf-8')
+        return super().default(o)
 
 
 def find_matching_func(contract_abi, fn_name, fn_type):
@@ -61,8 +61,8 @@ def package_contract_func_args(contract_abi, fn_name, fn_type, args: list) -> li
     """ setup parameter types according to abi"""
     abi = find_matching_func(contract_abi, fn_name, fn_type)
 
-    for idx, input in enumerate(abi['inputs']):
-        if input['type'].startswith('uint') or input['type'].startswith('int'):
+    for idx, _input in enumerate(abi['inputs']):
+        if _input['type'].startswith('uint') or _input['type'].startswith('int'):
             args[idx] = int(args[idx])
     return args
 

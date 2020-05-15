@@ -1,6 +1,9 @@
 import sys
 import eth_utils
 
+from eth_utils import address
+from eth_abi.decoding import AddressDecoder
+
 
 def uncache(exclude: [str]):
     pkgs = []
@@ -30,22 +33,19 @@ def _is_hex_address(value) -> bool:
     """
     if not eth_utils.types.is_text(value):
         return False
-    elif not eth_utils.hexadecimal.is_hex(value):
+    if not eth_utils.hexadecimal.is_hex(value):
         return False
-    else:
-        unprefixed = eth_utils.hexadecimal.remove_0x_prefix(value)
-        return len(unprefixed) == 42
+    unprefixed = eth_utils.hexadecimal.remove_0x_prefix(value)
+    return len(unprefixed) == 42
 
 
+# pylint: disable=unused-argument
 def _is_checksum_address(value) -> bool:
     return True
 
 
-from eth_utils import address
 address.is_checksum_address = _is_checksum_address
 address.is_hex_address = _is_hex_address
 uncache(["eth_utils.address"])
 
-from eth_abi.decoding import AddressDecoder
 AddressDecoder.value_bit_size = 21 * 8
-

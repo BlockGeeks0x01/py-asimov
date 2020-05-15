@@ -21,7 +21,10 @@ class Template:
         .. code-block:: python
 
             >>> from asimov import Node, Template
-            >>> node = Node("http://seed.asimov.tech", "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3")
+            >>> node = Node(
+                "http://seed.asimov.tech",
+                "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3"
+                )
             >>> t = Template(node)
             >>> tx = t.submit("tutorial.sol", "template name1", "Tutorial")
             >>> tx
@@ -53,7 +56,10 @@ class Template:
         .. code-block:: python
 
             >>> from asimov import Node, Template, constant
-            >>> node = Node("http://seed.asimov.tech", "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3")
+            >>> node = Node(
+                    "http://seed.asimov.tech",
+                    "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3"
+                )
             >>> t = Template(node)
             >>> tx = t.submit("tutorial.sol", "template name1", "Tutorial")
             >>> assert tx.check() is constant.SUCCESS

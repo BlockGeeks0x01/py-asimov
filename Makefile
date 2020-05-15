@@ -40,7 +40,7 @@ release: clean
 	bump2version $(bump)
 	git push origin && git push origin --tags
 	python setup.py sdist bdist_wheel
-	twine upload dist/*
+	twine upload --repository pypi dist/*
 	git config commit.gpgSign "$(CURRENT_SIGN_SETTING)"
 
 dist: clean
@@ -50,3 +50,6 @@ dist: clean
 code-cov:
 	pytest --cov=asimov --cov-report=html tests/
 	open htmlcov/index.html
+
+lint:
+	pylint asimov

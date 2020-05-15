@@ -13,7 +13,9 @@ extras_require = {
         "pytest-cov>=2.8.1,<3",
         "tox>=3.15.0,<4",
     ],
-    'lint': [],
+    'lint': [
+        "pylint>=2.5.2,<3",
+    ],
     'doc': [
         "Sphinx>=1.8.5,<2",
         "sphinx-rtd-theme>=0.4.3,<1",
@@ -44,7 +46,7 @@ setup(
     author="The Asimov Foundation",
     author_email="ericsgy@163.com",
     include_package_data=True,
-    url="https://gitlab.asimov.work/asimov/asimov-python-sdk",
+    url="https://github.com/AsimovNetwork/asimovpy-lib",
     install_requires=[
         "fastecdsa>=1.7.4,<2",
         "web3>=4.9.0,<5",

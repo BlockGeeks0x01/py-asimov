@@ -5,7 +5,7 @@ from asimov import (
     Transaction,
     AccountFactory
 )
-from asimov.transactions import VarIntSerializeSize
+from asimov.transactions import var_int_serialize_size
 
 
 def test_encoding():
@@ -135,4 +135,4 @@ def test_create_template_trx():
     (1 << 32, 9)
 ])
 def test_var_int_serialize_size(value, expected):
-    assert VarIntSerializeSize(value) == expected
+    assert var_int_serialize_size(value) == expected

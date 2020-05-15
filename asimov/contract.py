@@ -21,6 +21,7 @@ class Contract:
                  template_name: str = None, args: list = None):
         try:
             contract_template = node.get_contract_template(address=address, name=template_name)
+        # pylint: disable=bare-except
         except:
             # create template firstly
             assert c is not None
@@ -69,6 +70,7 @@ class Contract:
         """
         return self.node._call_readonly_function(
             contract_address=self.address,
+            # pylint: disable=no-value-for-parameter
             data=remove_0x_prefix(self.encode_tx_data(func_name, args=args)),
             func_name=func_name,
             abi=self.abi_json_str
@@ -76,7 +78,8 @@ class Contract:
 
     def execute(self, func_name, args=None, asset_value=0, asset_type=ASCOIN, tx_fee_type=ASCOIN) -> Tx:
         """
-        send a transaction to execute a function in the contract and return the transaction object :class:`~asimov.data_type.Tx`.
+        send a transaction to execute a function in the contract and
+        return the transaction object :class:`~asimov.data_type.Tx`.
         Note the returned :class:`~asimov.data_type.Tx` object is in pending status.
         You need to check execution status constantly and wait it confirmed on chain.
 

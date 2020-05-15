@@ -182,7 +182,10 @@ class Node:
         .. code-block:: python
 
             >>> from asimov import Node, constant
-            >>> node = Node("http://seed.asimov.tech", "0xafd29358a5ba9e2f5aac5cd5013a6830a99e34a68c469c78ab5f4c6f1d8c2a46")
+            >>> node = Node(
+                    "http://seed.asimov.tech",
+                    "0xafd29358a5ba9e2f5aac5cd5013a6830a99e34a68c469c78ab5f4c6f1d8c2a46"
+                )
             >>> tx = node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10)
             # wait tx on chain
             >>> assert tx.check() is constant.SUCCESS
@@ -351,8 +354,7 @@ class Node:
             if fees.get(vote_asset_type, 0) > balance_of_vote_asset_type:
                 raise error.NotEnoughMoney(
                     f"need {assets[vote_asset_type]}, but only have {balance_of_vote_asset_type} of {vote_asset_type}")
-            else:
-                assets[vote_asset_type] = balance_of_vote_asset_type
+            assets[vote_asset_type] = balance_of_vote_asset_type
         else:
             assets[vote_asset_type] = assets.get(vote_asset_type, 0) + vote_value
         return self._select_utxo(assets)
@@ -408,8 +410,15 @@ class Node:
         .. code-block:: python
 
             >>> from asimov import Node, constant
-            >>> node = Node("http://seed.asimov.tech", "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3")
-            >>> node.send("0x663bc0936166c07431ed04d7dc207eb7694e223ec4", asset_value=10, asset_type=constant.ASCOIN, tx_fee_type=constant.ASCOIN)
+            >>> node = Node(
+                    "http://seed.asimov.tech",
+                    "0x98ca5264f6919fc12536a77c122dfaeb491ab01ed657c6db32e14a252a8125e3"
+                )
+            >>> node.send(
+                    "0x663bc0936166c07431ed04d7dc207eb7694e223ec4",
+                    asset_value=10, asset_type=constant.ASCOIN,
+                    tx_fee_type=constant.ASCOIN
+                )
             [id: 91c4645bcf3680c699a591632cd8769abe2973fd2de70081a6752d9781f2801b]
         """
         if asset_value < 1:
@@ -487,7 +496,8 @@ class Node:
         outputs = [contract_output]
         if asset_type == tx_fee_type:
             outputs.append(
-                self.create_tx_output(self.address, select_rst.get(asset_type, 0) - asset_value - tx_fee_value, asset_type)
+                self.create_tx_output(
+                    self.address, select_rst.get(asset_type, 0) - asset_value - tx_fee_value, asset_type)
             )
         else:
             outputs.extend([

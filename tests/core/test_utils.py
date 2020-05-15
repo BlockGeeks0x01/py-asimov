@@ -1,10 +1,8 @@
 import json
-from datetime import datetime
 
 import pytest
 from asimov._utils.common import dict_add
-from asimov._utils.encode import AsimovJsonEncoder, find_matching_func, package_contract_func_args, \
-    encode_params
+from asimov._utils.encode import AsimovJsonEncoder, find_matching_func
 from asimov.account import AccountFactory
 
 
@@ -44,7 +42,3 @@ def test_find_matching_func(complied_contract, args, expect_rst):
             find_matching_func(complied_contract.abi, *args)
     else:
         assert find_matching_func(complied_contract.abi, *args) == expect_rst
-
-
-def test_package_contract_func_args():
-    pass

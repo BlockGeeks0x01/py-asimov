@@ -4,6 +4,6 @@ import collections
 def dict_add(*args) -> dict:
     total = collections.defaultdict(int)
     for arg in args:
-        for k, v in arg.items():
-            total[k] += v
+        for key, value in arg.items():
+            total[key] += value
     return total

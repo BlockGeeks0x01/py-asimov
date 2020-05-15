@@ -5,12 +5,12 @@ from eth_utils.hexadecimal import remove_0x_prefix
 from .constant import SUCCESS, FAILED
 
 
-def __smart_contract_repr(c):
+def __smart_contract_repr(contract):
     return pformat({
-        "abi": c.abi,
-        "bytecode": c.bytecode,
-        "address": c.address,
-        "source": c.source
+        "abi": contract.abi,
+        "bytecode": contract.bytecode,
+        "address": contract.address,
+        "source": contract.source
     })
 
 
@@ -81,13 +81,11 @@ class Tx:
     def check(self) -> int:
         """
         check whether a normal transaction is confirmed on chain, or a contract call is successful or not
-        
         :return: 1 if the transaction is confirmed on chain, or the contract call is successful
         """
         if self.is_contract_tx:
             return self.node.check(self.id)
-        else:
-            return SUCCESS if self.node.wait_for_confirmation(self.id) else FAILED
+        return SUCCESS if self.node.wait_for_confirmation(self.id) else FAILED
 
     def broadcast(self):
         """
@@ -104,9 +102,13 @@ class Asset:
 
     Asimov asset consists of 3 parts
 
-    #. asset_type, 4 bytes long, each bit contains an asset property. For now, the first bit is used to determine whether an asset is divisible and the second bit is used to determine whether the asset is restricted.
-    #. org_id, 4 bytes long organization id, system wide unique id assigned to organization when registering to asimov platform.
-    #. asset_index, 4 bytes long asset index in organization, the assigning rule is determined by the organization itself.
+    #. asset_type, 4 bytes long, each bit contains an asset property.
+    For now, the first bit is used to determine whether an asset is divisible and
+    the second bit is used to determine whether the asset is restricted.
+    #. org_id, 4 bytes long organization id, system wide unique id assigned to organization
+    when registering to asimov platform.
+    #. asset_index, 4 bytes long asset index in organization,
+    the assigning rule is determined by the organization itself.
     """
 
     @staticmethod
