@@ -1,6 +1,13 @@
+# py-asimov
+![PyPI - License](https://img.shields.io/pypi/l/py-asimov?color=green)
+[![PyPI](https://img.shields.io/pypi/v/py-asimov)](https://pypi.org/project/py-asimov/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py-asimov)](https://pypi.org/project/py-asimov/)
+[![Read the Docs (version)](https://img.shields.io/readthedocs/py-asimov/latest)](https://py-asimov.readthedocs.io/en/latest/)
+
 ## Introduction
 
 This document describes how to develop python script to test and deploy contracts on Asimov using high level Python API.
+Read more in the [documentation on ReadTheDocs](https://py-asimov.readthedocs.io/en/latest/). [View the change log](https://py-asimov.readthedocs.io/en/latest/releases.html)
 
 ## Dependency
 
